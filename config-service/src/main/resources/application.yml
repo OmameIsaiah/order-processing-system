@@ -1,0 +1,27 @@
+spring:
+  config:
+    import: optional:file:.env[.properties]
+  dotenv:
+    enabled: true
+  application:
+    name: ${CONFIG_SERVICE_NAME:config-service}
+  cloud:
+    config:
+      server:
+        native:
+          search-locations:
+            - classpath:/config/prod
+            - classpath:/config/dev
+            - classpath:/config/test
+        bootstrap: 'true'
+  profiles:
+    active: native
+server:
+  port: ${CONFIG_SERVICE_PORT:4000}
+encrypt:
+  keyStore:
+    alias: neptune_mfb_configserv
+    location: classpath:/neptune_mfb_config_key.jks
+    password: fJc0ADsc7N7DdCwE2zCWWqiOUyv8lyTBkHsHRUWa9pw
+    secret: fJc0ADsc7N7DdCwE2zCWWqiOUyv8lyTBkHsHRUWa9pw
+    type: jks
