@@ -1,5 +1,5 @@
 server:
-  port: 4001
+  port: 3001
   host: localhost
   servlet:
     contextPath: /account-service
@@ -19,7 +19,7 @@ spring:
       idle-timeout: 600000.0
       max-lifetime: 1800000
     driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://localhost:3331/neptune_prod_store?allowPublicKeyRetrieval=true&useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC&autoReconnect=true&useSSL=false&noAccessToProcedureBodies=true
+    url: jdbc:mysql://localhost:3331/neptune_test_store?allowPublicKeyRetrieval=true&useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC&autoReconnect=true&useSSL=false&noAccessToProcedureBodies=true
     username: root
     password: password
   jmx:

@@ -1,0 +1,7 @@
+spring:
+  cloud:
+    config:
+      uri: http://localhost:2000/config/dev
+      fail-fast: true
+  config:
+    import: configserver:http://localhost:2000

@@ -1,31 +1,39 @@
 server:
-  port: 2001
+  port: 3003
+  host: localhost
   servlet:
-    contextPath: /account-service
+    contextPath: /order-service
 spring:
   application:
-    name: account-service
+    name: order-service
   cloud:
     config:
       enabled: false
       import-check:
         enabled: false
   datasource:
-    driverClassName: com.mysql.cj.jdbc.Driver
     hikari:
-      connectionTimeout: 30000.0
-      idleTimeout: 600000.0
-      maxLifetime: 1800000
-      maximumPoolSize: 200
+      minimum-idle: 5
+      maximum-pool-size: 200
+      connection-timeout: 30000.0
+      idle-timeout: 600000.0
+      max-lifetime: 1800000
+    driver-class-name: com.mysql.cj.jdbc.Driver
     url: jdbc:mysql://localhost:3331/neptune_test_store?allowPublicKeyRetrieval=true&useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC&autoReconnect=true&useSSL=false&noAccessToProcedureBodies=true
     username: root
     password: password
   jmx:
     default-domain: account-service
   jpa:
+    open-in-view: false
+    database-platform: org.hibernate.dialect.MySQLDialect
+    defer-datasource-initialization: false
+    hibernate:
+      ddl-auto: none
+      show-sql: true
     properties:
       hibernate:
-        dialect: org.hibernate.dialect.MySQL8Dialect
+        dialect: org.hibernate.dialect.MySQLDialect
         format_sql: false
         id:
           new_generator_mappings: false
