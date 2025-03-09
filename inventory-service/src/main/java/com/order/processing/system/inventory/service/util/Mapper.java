@@ -15,6 +15,10 @@ import static com.order.processing.system.inventory.service.util.AppMessages.PRO
 
 
 public class Mapper {
+    public static final String TOTAL_RECORDS = "totalRecords";
+    public static final String TOTAL_PAGES = "totalPage";
+    public static final String PAGEABLE = "pageable";
+
     public static Product mapProductRequestDTOToEntityClass(AddProductRequestDTO request) {
         return Optional.ofNullable(
                         Objects.isNull(request) ? null :
@@ -41,6 +45,10 @@ public class Mapper {
 
 
     public static ResponseEntity<ApiResponse> processProductPageResponse(Page<Product> list) {
+        Map<String, Object> map = new HashMap<>();
+        map.put(PAGEABLE, list.getPageable());
+        map.put(TOTAL_RECORDS, list.getTotalElements());
+        map.put(TOTAL_PAGES, list.getTotalPages());
         return ResponseEntity.status(HttpStatus.OK).body(
                 new ApiResponse<>(true,
                         HttpStatus.OK.value(),
@@ -49,20 +57,16 @@ public class Mapper {
                         list.stream()
                                 .map(Mapper::mapProductToResponseDTO)
                                 .filter(Objects::nonNull)
-                                .collect(Collectors.toList())
+                                .collect(Collectors.toList()),
+                        map
                 ));
     }
 
-    public static ResponseEntity<ApiResponse> processProductListResponse(List<Product> list) {
-        return ResponseEntity.status(HttpStatus.OK).body(
-                new ApiResponse<>(true,
-                        HttpStatus.OK.value(),
-                        HttpStatus.OK,
-                        PRODUCT_RETRIEVED_SUCCESSFULLY,
-                        list.stream()
-                                .map(Mapper::mapProductToResponseDTO)
-                                .filter(Objects::nonNull)
-                                .collect(Collectors.toList())
-                ));
+    public static Page<Product> convertListToPage(List<Product> list, int pageNo, int pageSize) {
+        return PaginationUtil.getPage(list, pageNo, pageSize);
+    }
+
+    public static ResponseEntity<ApiResponse> processProductListResponse(List<Product> list, int pageNo, int pageSize) {
+        return processProductPageResponse(convertListToPage(list, pageNo, pageSize));
     }
 }
