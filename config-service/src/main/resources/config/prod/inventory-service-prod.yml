@@ -1,11 +1,11 @@
 server:
-  port: 4001
+  port: 4002
   host: localhost
   servlet:
-    contextPath: /account-service
+    contextPath: /inventory-service
 spring:
   application:
-    name: account-service
+    name: inventory-service
   cloud:
     config:
       enabled: false

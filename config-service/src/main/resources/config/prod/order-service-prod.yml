@@ -1,11 +1,11 @@
 server:
-  port: 4001
+  port: 4003
   host: localhost
   servlet:
-    contextPath: /account-service
+    contextPath: /order-service
 spring:
   application:
-    name: account-service
+    name: order-service
   cloud:
     config:
       enabled: false

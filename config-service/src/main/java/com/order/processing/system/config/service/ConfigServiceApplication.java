@@ -23,7 +23,6 @@ public class ConfigServiceApplication {
         // Allowed frontend origins
         config.setAllowedOrigins(Arrays.asList(
                 "http://localhost:4200",
-                "http://localhost:5500",
                 "http://localhost:3000"
         ));
         // Allowed methods
