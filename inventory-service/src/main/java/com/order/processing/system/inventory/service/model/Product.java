@@ -37,7 +37,7 @@ public class Product implements Serializable {
     @NotNull(message = NULL_PRODUCT_NAME)
     private String name;
     @Column(name = "quantity")
-    @Min(value = 1, message = MIN_PRODUCT_QUANTITY_EXCEEDED)
+    @Min(value = 0, message = MIN_PRODUCT_QUANTITY_EXCEEDED)
     @NotNull(message = NULL_PRODUCT_QUANTITY)
     private Integer quantity;
     @Column(name = "last_modified")
