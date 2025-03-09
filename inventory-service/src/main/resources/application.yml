@@ -5,3 +5,4 @@ spring:
     #active: prod
   application:
     name: inventory-service
+

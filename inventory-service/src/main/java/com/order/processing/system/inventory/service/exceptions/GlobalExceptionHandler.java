@@ -61,7 +61,7 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
     @ExceptionHandler(value = Exception.class)
     public ResponseEntity handlerGlobalErrors(Exception exception) {
         exception.printStackTrace();
-        log.warn("An error occur  {}", exception.fillInStackTrace());
+        log.warn("An error occur  {}", exception.getMessage());
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new ApiResponse<>(false, HttpStatus.BAD_REQUEST.value(), HttpStatus.BAD_REQUEST, exception.getMessage()));
     }
 }
