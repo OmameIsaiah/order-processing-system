@@ -121,16 +121,7 @@ public class ProductServiceImpl implements ProductService {
         if (list.isEmpty() || Objects.isNull(list)) {
             throw new RecordNotFoundException(NO_PRODUCT_FOUND);
         }
-        return ResponseEntity.status(HttpStatus.OK).body(
-                new ApiResponse<>(true,
-                        HttpStatus.OK.value(),
-                        HttpStatus.OK,
-                        PRODUCT_RETRIEVED_SUCCESSFULLY,
-                        list.stream()
-                                .map(Mapper::mapProductToResponseDTO)
-                                .filter(Objects::nonNull)
-                                .collect(Collectors.toList())
-                ));
+        return Mapper.processProductPageResponse(list);
     }
 
     @Override

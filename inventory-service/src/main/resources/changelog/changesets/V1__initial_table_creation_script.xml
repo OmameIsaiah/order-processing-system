@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8" standalone="no"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog/1.9"
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog/1.9 http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-1.9.xsd">
+
+    <changeSet author="Isaiah Omame" id="create_product_tables_1">
+        <sql>
+            <![CDATA[
+                CREATE TABLE IF NOT EXISTS products (
+                    id BIGINT AUTO_INCREMENT PRIMARY KEY,
+                    uuid VARCHAR(36) NOT NULL UNIQUE,
+                    name VARCHAR(255) NOT NULL,
+                    quantity INT NOT NULL CHECK (quantity >= 0),
+                    last_modified DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+                    date_created DATETIME DEFAULT CURRENT_TIMESTAMP,
+                    CONSTRAINT chk_product_quantity CHECK (quantity >= 0)
+                ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+            ]]>
+        </sql>
+    </changeSet>
+</databaseChangeLog>

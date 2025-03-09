@@ -1,6 +1,6 @@
-package com.order.processing.system.inventory.service.exceptions;
+package com.order.processing.system.order.service.exceptions;
 
-import com.order.processing.system.inventory.service.dto.response.ApiResponse;
+import com.order.processing.system.order.service.dto.response.ApiResponse;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
