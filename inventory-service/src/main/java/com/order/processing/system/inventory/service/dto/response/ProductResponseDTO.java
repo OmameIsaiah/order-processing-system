@@ -16,6 +16,7 @@ public class ProductResponseDTO implements Serializable {
     private String uuid;
     private String name;
     private Integer quantity;
+    private Double unitPrice;
     private LocalDateTime lastModified;
     private LocalDateTime dateCreated;
 }

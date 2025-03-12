@@ -5,8 +5,11 @@ public class AppMessages {
     /////////////////////////////////////ERROR MESSAGES///////////////////////////////////
     public static final String NULL_PRODUCT_NAME = "Oops! Product name cannot be null, please check.";
     public static final String EMPTY_PRODUCT_NAME = "Oops! Product name cannot be empty, please check.";
+    public static final String MIN_PRODUCT_QUANTITY_EXCEEDED_REQUEST = "Oops! Product stock quantity cannot be less than 1, please check.";
     public static final String MIN_PRODUCT_QUANTITY_EXCEEDED = "Oops! Product stock quantity cannot be less than 0, please check.";
+    public static final String MIN_PRODUCT_UNIT_PRICE_EXCEEDED = "Oops! Product unit price cannot be less than 0, please check.";
     public static final String NULL_PRODUCT_QUANTITY = "Oops! Product stock quantity cannot be null, please check.";
+    public static final String NULL_PRODUCT_UNIT_PRICE = "Oops! Product unit price cannot be null, please check.";
     public static final String NULL_PRODUCT_STOCK_AVAILABLE = "Oops! Product stock available cannot be null, please check.";
     public static final String NULL_PRODUCT_UUID = "Oops! Product uuid cannot be null, please check.";
     public static final String EMPTY_PRODUCT_UUID = "Oops! Product uuid cannot be empty, please check.";

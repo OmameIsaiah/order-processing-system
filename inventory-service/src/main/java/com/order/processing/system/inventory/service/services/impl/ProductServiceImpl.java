@@ -73,6 +73,7 @@ public class ProductServiceImpl implements ProductService {
         Product product = optional.get();
         product.setName(requestDTO.getName());
         product.setQuantity(requestDTO.getQuantity());
+        product.setUnitPrice(requestDTO.getUnitPrice());
         product.setLastModified(LocalDateTime.now());
         return productRepository.save(product);
     }

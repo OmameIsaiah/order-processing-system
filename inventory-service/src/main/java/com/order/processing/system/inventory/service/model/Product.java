@@ -40,6 +40,9 @@ public class Product implements Serializable {
     @Min(value = 0, message = MIN_PRODUCT_QUANTITY_EXCEEDED)
     @NotNull(message = NULL_PRODUCT_QUANTITY)
     private Integer quantity;
+    @Column(name = "unit_price")
+    @NotNull(message = NULL_PRODUCT_UNIT_PRICE)
+    private Double unitPrice;
     @Column(name = "last_modified")
     @UpdateTimestamp
     private LocalDateTime lastModified;

@@ -11,9 +11,11 @@
                     uuid VARCHAR(36) NOT NULL UNIQUE,
                     name VARCHAR(255) NOT NULL,
                     quantity INT NOT NULL CHECK (quantity >= 0),
+                    unit_price DOUBLE NOT NULL CHECK (unit_price >= 0),
                     last_modified DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
                     date_created DATETIME DEFAULT CURRENT_TIMESTAMP,
-                    CONSTRAINT chk_product_quantity CHECK (quantity >= 0)
+                    CONSTRAINT chk_product_quantity CHECK (quantity >= 0),
+                    CONSTRAINT chk_product_unit_price CHECK (unit_price >= 0)
                 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
             ]]>

@@ -4,6 +4,8 @@ import com.order.processing.system.inventory.service.dto.request.AddProductReque
 import com.order.processing.system.inventory.service.dto.response.ApiResponse;
 import com.order.processing.system.inventory.service.dto.response.ProductResponseDTO;
 import com.order.processing.system.inventory.service.model.Product;
+import com.order.processing.system.proto.AddProductRequest;
+import com.order.processing.system.proto.ProductResponse;
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -26,6 +28,19 @@ public class Mapper {
                                         .uuid(UUID.randomUUID().toString())
                                         .name(request.getName())
                                         .quantity(request.getQuantity())
+                                        .unitPrice(request.getUnitPrice())
+                                        .build())
+                .orElse(null);
+    }
+
+    public static Product mapProductRequestDTOToEntityClass(AddProductRequest request) {
+        return Optional.ofNullable(
+                        Objects.isNull(request) ? null :
+                                Product.builder()
+                                        .uuid(UUID.randomUUID().toString())
+                                        .name(request.getName())
+                                        .quantity(request.getQuantity())
+                                        .unitPrice(request.getUnitPrice())
                                         .build())
                 .orElse(null);
     }
@@ -37,8 +52,30 @@ public class Mapper {
                                         .uuid(product.getUuid())
                                         .name(product.getName())
                                         .quantity(product.getQuantity())
+                                        .unitPrice(product.getUnitPrice())
                                         .dateCreated(product.getDateCreated())
                                         .lastModified(product.getLastModified())
+                                        .build())
+                .orElse(null);
+    }
+
+    public static List<ProductResponse> getListProductResponse(Page<Product> list) {
+        return list.stream()
+                .filter(Objects::nonNull)
+                .map(Mapper::mapProductToProductResponse)
+                .collect(Collectors.toList());
+    }
+
+    public static ProductResponse mapProductToProductResponse(Product product) {
+        return Optional.ofNullable(
+                        Objects.isNull(product) ? null :
+                                ProductResponse.newBuilder()
+                                        .setUuid(product.getUuid())
+                                        .setName(product.getName())
+                                        .setQuantity(product.getQuantity())
+                                        .setUnitPrice(product.getUnitPrice())
+                                        .setDateCreated(Utils.toProtoTimestamp(product.getDateCreated()))
+                                        .setLastModified(Utils.toProtoTimestamp(product.getLastModified()))
                                         .build())
                 .orElse(null);
     }

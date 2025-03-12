@@ -1,6 +1,6 @@
-package com.order.processing.system.inventory.service.dto.request;
+package com.order.processing.system.order.service.dto.request;
 
-import com.order.processing.system.inventory.service.util.AppMessages;
+import com.order.processing.system.order.service.util.AppMessages;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
@@ -8,7 +8,7 @@ import lombok.Data;
 
 import java.io.Serializable;
 
-import static com.order.processing.system.inventory.service.util.AppMessages.*;
+import static com.order.processing.system.order.service.util.AppMessages.*;
 
 @Data
 public class AddProductRequestDTO implements Serializable {
