@@ -12,26 +12,6 @@ spring:
             - classpath:/config/test
             - classpath:/config/prod
         bootstrap: 'true'
-#spring:
-#  config:
-#    import: optional:file:.env[.properties]
-#  dotenv:
-#    enabled: true
-#  application:
-#    name: ${CONFIG_SERVICE_NAME:config-service}
-#  cloud:
-#    config:
-#      server:
-#        native:
-#          search-locations:
-#            - classpath:/config/prod
-#            - classpath:/config/dev
-#            - classpath:/config/test
-#        bootstrap: 'true'
-#  profiles:
-#    active: native
-#server:
-#  port: ${CONFIG_SERVICE_DEV_PORT:2000} #2000 for dev, 3000 for test and 400 for prod
 encrypt:
   keyStore:
     alias: neptune_mfb_configserv

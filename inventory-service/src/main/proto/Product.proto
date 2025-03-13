@@ -1,0 +1,69 @@
+syntax = "proto3";
+
+package product;
+
+import "google/protobuf/timestamp.proto";
+
+option java_multiple_files = true;
+option java_package = "com.order.processing.system.proto";
+option java_outer_classname = "ProductProto";
+
+// Request Messages
+message AddProductRequest {
+  string name = 1;
+  int32 quantity = 2;
+  double unit_price = 3;
+}
+
+message UpdateProductRequest {
+  string product_uuid = 1;
+  string name = 2;
+  int32 quantity = 3;
+  double unit_price = 4;
+}
+
+message UpdateProductStockRequest {
+  string product_uuid = 1;
+  int32 stock_available = 2;
+}
+
+message CheckStockRequest {
+  string product_uuid = 1;
+}
+
+message ViewAllProductsRequest {
+  int32 page = 1;
+  int32 size = 2;
+}
+
+message DeleteProductRequest {
+  string product_uuid = 1;
+}
+
+// Response Messages
+message ProductResponse {
+  string uuid = 1;
+  string name = 2;
+  int32 quantity = 3;
+  double unit_price = 4;
+  google.protobuf.Timestamp last_modified = 5;
+  google.protobuf.Timestamp date_created = 6;
+}
+
+message ApiResponse {
+  bool success = 1;
+  int32 code = 2;
+  string status = 3;
+  string message = 4;
+  repeated ProductResponse data = 5;
+}
+
+// Service Definition
+service ProductService {
+  rpc AddProduct(AddProductRequest) returns (ApiResponse);
+  rpc UpdateProduct(UpdateProductRequest) returns (ApiResponse);
+  rpc UpdateStockAvailability(UpdateProductStockRequest) returns (ApiResponse);
+  rpc CheckStockAvailability(CheckStockRequest) returns (ApiResponse);
+  rpc ViewAllProducts(ViewAllProductsRequest) returns (ApiResponse);
+  rpc DeleteProduct(DeleteProductRequest) returns (ApiResponse);
+}

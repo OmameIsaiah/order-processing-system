@@ -1,4 +1,4 @@
-package com.order.processing.system.inventory.service.dto.request;
+package com.order.processing.system.order.service.dto.request;
 
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
@@ -6,7 +6,7 @@ import lombok.Data;
 
 import java.io.Serializable;
 
-import static com.order.processing.system.inventory.service.util.AppMessages.*;
+import static com.order.processing.system.order.service.util.AppMessages.*;
 
 
 @Data

@@ -1,10 +1,11 @@
-package com.order.processing.system.inventory.service.route;
+package com.order.processing.system.order.service.route;
 
-import com.order.processing.system.inventory.service.dto.request.AddProductRequestDTO;
-import com.order.processing.system.inventory.service.dto.request.UpdateProductRequestDTO;
-import com.order.processing.system.inventory.service.dto.request.UpdateProductStockRequestDTO;
-import com.order.processing.system.inventory.service.dto.response.ApiResponse;
-import com.order.processing.system.inventory.service.services.ProductService;
+
+import com.order.processing.system.order.service.dto.request.AddProductRequestDTO;
+import com.order.processing.system.order.service.dto.request.UpdateProductRequestDTO;
+import com.order.processing.system.order.service.dto.request.UpdateProductStockRequestDTO;
+import com.order.processing.system.order.service.services.impl.ProductGrpcService;
+import com.order.processing.system.proto.ApiResponse;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
@@ -13,28 +14,29 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import static com.order.processing.system.inventory.service.util.EndpointsURL.*;
+import static com.order.processing.system.order.service.util.EndpointsURL.*;
+
 
 @RestController
 @RequestMapping(value = PRODUCT_BASE_URL, headers = "Accept=application/json")
 @Tag(name = "product route", description = "Endpoints for adding, updating, deleting, viewing and checking stock availability of products")
 @RequiredArgsConstructor
 public class ProductRoute {
-    private final ProductService productService;
+    private final ProductGrpcService productService;
 
     @PostMapping(value = ADD_PRODUCT, produces = MediaType.APPLICATION_JSON_VALUE)
     @Operation(
             summary = "Endpoint for adding new product to inventory",
             description = "Endpoint for adding new product to inventory")
-    public ResponseEntity<ApiResponse> addProduct(@RequestBody @Valid AddProductRequestDTO payload) {
+    public ResponseEntity addProduct(@RequestBody @Valid AddProductRequestDTO payload) {
         return productService.addProduct(payload);
     }
 
     @PutMapping(value = UPDATE_PRODUCT, produces = MediaType.APPLICATION_JSON_VALUE)
     @Operation(
-            summary = "Endpoint for updating product name and quantity",
-            description = "Endpoint for updating product name and quantity")
-    public ResponseEntity<ApiResponse> updateProduct(@RequestBody @Valid UpdateProductRequestDTO payload) {
+            summary = "Endpoint for updating a product",
+            description = "Endpoint for updating a product")
+    public ResponseEntity updateProduct(@RequestBody @Valid UpdateProductRequestDTO payload) {
         return productService.updateProduct(payload);
     }
 
@@ -42,7 +44,7 @@ public class ProductRoute {
     @Operation(
             summary = "Endpoint for updating stock availability of a product",
             description = "Endpoint for updating stock availability of a product")
-    public ResponseEntity<ApiResponse> updateStockAvailability(@RequestBody @Valid UpdateProductStockRequestDTO payload) {
+    public ResponseEntity updateStockAvailability(@RequestBody @Valid UpdateProductStockRequestDTO payload) {
         return productService.updateStockAvailability(payload);
     }
 
@@ -50,15 +52,23 @@ public class ProductRoute {
     @Operation(
             summary = "Endpoint for checking product availability",
             description = "Endpoint for checking product availability")
-    public ResponseEntity<ApiResponse> checkStockAvailability(@RequestParam("productUuid") String productUuid) {
+    public ResponseEntity checkStockAvailability(@RequestParam("productUuid") String productUuid) {
         return productService.checkStockAvailability(productUuid);
+    }
+
+    @GetMapping(value = VIEW_PRODUCT_BY_ID, produces = MediaType.APPLICATION_JSON_VALUE)
+    @Operation(
+            summary = "Endpoint for getting product by id",
+            description = "Endpoint for getting product by id")
+    public ResponseEntity getProductById(@RequestParam("productUuid") String productUuid) {
+        return productService.getProductById(productUuid);
     }
 
     @GetMapping(value = VIEW_ALL_PRODUCTS, produces = MediaType.APPLICATION_JSON_VALUE)
     @Operation(
             summary = "Endpoint for viewing all products in the inventory",
             description = "Endpoint for viewing all products in the inventory")
-    public ResponseEntity<ApiResponse> viewAllProducts(
+    public ResponseEntity viewAllProducts(
             @RequestParam(value = "page", defaultValue = "0") Integer page,
             @RequestParam(value = "size", defaultValue = "50") Integer size) {
         return productService.viewAllProducts(page, size);
@@ -68,7 +78,7 @@ public class ProductRoute {
     @Operation(
             summary = "Endpoint for deleting a product",
             description = "Endpoint for deleting a product")
-    public ResponseEntity<ApiResponse> deleteProduct(@RequestParam("productUuid") String productUuid) {
+    public ResponseEntity deleteProduct(@RequestParam("productUuid") String productUuid) {
         return productService.deleteProduct(productUuid);
     }
 }

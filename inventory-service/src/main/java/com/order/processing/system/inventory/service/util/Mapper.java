@@ -1,68 +1,48 @@
 package com.order.processing.system.inventory.service.util;
 
-import com.order.processing.system.inventory.service.dto.request.AddProductRequestDTO;
-import com.order.processing.system.inventory.service.dto.response.ApiResponse;
-import com.order.processing.system.inventory.service.dto.response.ProductResponseDTO;
 import com.order.processing.system.inventory.service.model.Product;
+import com.order.processing.system.proto.AddProductRequest;
+import com.order.processing.system.proto.ProductResponse;
 import org.springframework.data.domain.Page;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 
-import java.util.*;
+import java.util.List;
+import java.util.Objects;
+import java.util.Optional;
+import java.util.UUID;
 import java.util.stream.Collectors;
-
-import static com.order.processing.system.inventory.service.util.AppMessages.PRODUCT_RETRIEVED_SUCCESSFULLY;
 
 
 public class Mapper {
-    public static Product mapProductRequestDTOToEntityClass(AddProductRequestDTO request) {
+    public static Product mapProductRequestDTOToEntityClass(AddProductRequest request) {
         return Optional.ofNullable(
                         Objects.isNull(request) ? null :
                                 Product.builder()
                                         .uuid(UUID.randomUUID().toString())
                                         .name(request.getName())
                                         .quantity(request.getQuantity())
+                                        .unitPrice(request.getUnitPrice())
                                         .build())
                 .orElse(null);
     }
 
-    public static ProductResponseDTO mapProductToResponseDTO(Product product) {
+    public static List<ProductResponse> getListProductResponse(Page<Product> list) {
+        return list.stream()
+                .filter(Objects::nonNull)
+                .map(Mapper::mapProductToProductResponse)
+                .collect(Collectors.toList());
+    }
+
+    public static ProductResponse mapProductToProductResponse(Product product) {
         return Optional.ofNullable(
                         Objects.isNull(product) ? null :
-                                ProductResponseDTO.builder()
-                                        .uuid(product.getUuid())
-                                        .name(product.getName())
-                                        .quantity(product.getQuantity())
-                                        .dateCreated(product.getDateCreated())
-                                        .lastModified(product.getLastModified())
+                                ProductResponse.newBuilder()
+                                        .setUuid(product.getUuid())
+                                        .setName(product.getName())
+                                        .setQuantity(product.getQuantity())
+                                        .setUnitPrice(product.getUnitPrice())
+                                        .setDateCreated(Utils.toProtoTimestamp(product.getDateCreated()))
+                                        .setLastModified(Utils.toProtoTimestamp(product.getLastModified()))
                                         .build())
                 .orElse(null);
-    }
-
-
-    public static ResponseEntity<ApiResponse> processProductPageResponse(Page<Product> list) {
-        return ResponseEntity.status(HttpStatus.OK).body(
-                new ApiResponse<>(true,
-                        HttpStatus.OK.value(),
-                        HttpStatus.OK,
-                        PRODUCT_RETRIEVED_SUCCESSFULLY,
-                        list.stream()
-                                .map(Mapper::mapProductToResponseDTO)
-                                .filter(Objects::nonNull)
-                                .collect(Collectors.toList())
-                ));
-    }
-
-    public static ResponseEntity<ApiResponse> processProductListResponse(List<Product> list) {
-        return ResponseEntity.status(HttpStatus.OK).body(
-                new ApiResponse<>(true,
-                        HttpStatus.OK.value(),
-                        HttpStatus.OK,
-                        PRODUCT_RETRIEVED_SUCCESSFULLY,
-                        list.stream()
-                                .map(Mapper::mapProductToResponseDTO)
-                                .filter(Objects::nonNull)
-                                .collect(Collectors.toList())
-                ));
     }
 }
