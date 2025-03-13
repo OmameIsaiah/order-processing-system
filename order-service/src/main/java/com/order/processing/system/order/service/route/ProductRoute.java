@@ -34,8 +34,8 @@ public class ProductRoute {
 
     @PutMapping(value = UPDATE_PRODUCT, produces = MediaType.APPLICATION_JSON_VALUE)
     @Operation(
-            summary = "Endpoint for updating product name and quantity",
-            description = "Endpoint for updating product name and quantity")
+            summary = "Endpoint for updating a product",
+            description = "Endpoint for updating a product")
     public ResponseEntity updateProduct(@RequestBody @Valid UpdateProductRequestDTO payload) {
         return productService.updateProduct(payload);
     }
@@ -54,6 +54,14 @@ public class ProductRoute {
             description = "Endpoint for checking product availability")
     public ResponseEntity checkStockAvailability(@RequestParam("productUuid") String productUuid) {
         return productService.checkStockAvailability(productUuid);
+    }
+
+    @GetMapping(value = VIEW_PRODUCT_BY_ID, produces = MediaType.APPLICATION_JSON_VALUE)
+    @Operation(
+            summary = "Endpoint for getting product by id",
+            description = "Endpoint for getting product by id")
+    public ResponseEntity getProductById(@RequestParam("productUuid") String productUuid) {
+        return productService.getProductById(productUuid);
     }
 
     @GetMapping(value = VIEW_ALL_PRODUCTS, produces = MediaType.APPLICATION_JSON_VALUE)

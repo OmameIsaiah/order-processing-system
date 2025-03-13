@@ -1,4 +1,4 @@
-package com.order.processing.system.inventory.service.services.impl;
+package com.order.processing.system.inventory.service.services;
 
 import com.order.processing.system.inventory.service.model.Product;
 import com.order.processing.system.inventory.service.repository.ProductRepository;
@@ -13,6 +13,7 @@ import org.springframework.data.domain.Sort;
 import org.springframework.grpc.server.service.GrpcService;
 import org.springframework.http.HttpStatus;
 
+import java.time.LocalDateTime;
 import java.util.*;
 
 import static com.order.processing.system.inventory.service.util.AppMessages.*;
@@ -54,17 +55,71 @@ public class ProductGrpcService extends ProductServiceGrpc.ProductServiceImplBas
 
     @Override
     public void updateProduct(UpdateProductRequest request, StreamObserver<ApiResponse> responseObserver) {
-        super.updateProduct(request, responseObserver);
+        Optional<Product> optional = productRepository.findProductByUuid(request.getProductUuid());
+        if (optional.isEmpty()) {
+            processInvalidProductIdResponse(responseObserver);
+        } else {
+            Product product = mapAndSaveUpdatedProduct(request, optional);
+            ApiResponse response = ApiResponse.newBuilder()
+                    .setSuccess(true)
+                    .setCode(HttpStatus.OK.value())
+                    .setStatus(HttpStatus.OK.toString())
+                    .setMessage(PRODUCT_UPDATED_SUCCESSFULLY)
+                    .addData(Mapper.mapProductToProductResponse(product))
+                    .build();
+            responseObserver.onNext(response);
+            responseObserver.onCompleted();
+        }
+    }
+
+    private Product mapAndSaveUpdatedProduct(UpdateProductRequest request, Optional<Product> optional) {
+        Product product = optional.get();
+        product.setName(request.getName());
+        product.setQuantity(request.getQuantity());
+        product.setUnitPrice(request.getUnitPrice());
+        product.setLastModified(LocalDateTime.now());
+        return productRepository.save(product);
     }
 
     @Override
     public void updateStockAvailability(UpdateProductStockRequest request, StreamObserver<ApiResponse> responseObserver) {
-        super.updateStockAvailability(request, responseObserver);
+        Optional<Product> optional = productRepository.findProductByUuid(request.getProductUuid());
+        if (optional.isEmpty()) {
+            processInvalidProductIdResponse(responseObserver);
+        } else {
+            Product product = optional.get();
+            product.setQuantity(request.getStockAvailable());
+            product.setLastModified(LocalDateTime.now());
+            productRepository.save(product);
+            ApiResponse response = ApiResponse.newBuilder()
+                    .setSuccess(true)
+                    .setCode(HttpStatus.OK.value())
+                    .setStatus(HttpStatus.OK.toString())
+                    .setMessage(PRODUCT_STOCK_UPDATED_SUCCESSFULLY)
+                    .addData(Mapper.mapProductToProductResponse(product))
+                    .build();
+            responseObserver.onNext(response);
+            responseObserver.onCompleted();
+        }
     }
 
     @Override
     public void checkStockAvailability(CheckStockRequest request, StreamObserver<ApiResponse> responseObserver) {
-        super.checkStockAvailability(request, responseObserver);
+        Optional<Product> optional = productRepository.findProductByUuid(request.getProductUuid());
+        if (optional.isEmpty()) {
+            processInvalidProductIdResponse(responseObserver);
+        } else {
+            Product product = optional.get();
+            ApiResponse response = ApiResponse.newBuilder()
+                    .setSuccess(true)
+                    .setCode(HttpStatus.OK.value())
+                    .setStatus(HttpStatus.OK.toString())
+                    .setMessage(PRODUCT_RETRIEVED_SUCCESSFULLY)
+                    .addData(Mapper.mapProductToProductResponse(product))
+                    .build();
+            responseObserver.onNext(response);
+            responseObserver.onCompleted();
+        }
     }
 
     @Override
@@ -98,6 +153,30 @@ public class ProductGrpcService extends ProductServiceGrpc.ProductServiceImplBas
 
     @Override
     public void deleteProduct(DeleteProductRequest request, StreamObserver<ApiResponse> responseObserver) {
-        super.deleteProduct(request, responseObserver);
+        Optional<Product> optional = productRepository.findProductByUuid(request.getProductUuid());
+        if (optional.isEmpty()) {
+            processInvalidProductIdResponse(responseObserver);
+        } else {
+            productRepository.deleteProductByUuid(optional.get().getUuid());
+            ApiResponse response = ApiResponse.newBuilder()
+                    .setSuccess(true)
+                    .setCode(HttpStatus.OK.value())
+                    .setStatus(HttpStatus.OK.toString())
+                    .setMessage(PRODUCT_DELETED_SUCCESSFULLY)
+                    .build();
+            responseObserver.onNext(response);
+            responseObserver.onCompleted();
+        }
+    }
+
+    private void processInvalidProductIdResponse(StreamObserver<ApiResponse> responseObserver) {
+        ApiResponse response = ApiResponse.newBuilder()
+                .setSuccess(false)
+                .setCode(HttpStatus.BAD_REQUEST.value())
+                .setStatus(HttpStatus.BAD_REQUEST.toString())
+                .setMessage(NO_PRODUCT_FOUND_WITH_ID)
+                .build();
+        responseObserver.onNext(response);
+        responseObserver.onCompleted();
     }
 }

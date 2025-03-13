@@ -25,9 +25,6 @@ public class GrpcClientConfig {
         } else if ("prod".equalsIgnoreCase(profile)) {
             host = "localhost";
             port = 4002;
-        } else {
-            host = "localhost";
-            port = 2002;
         }
         log.info("Connecting to gRPC server at " + host + ":" + port);
         return ManagedChannelBuilder.forAddress(host, port)

@@ -3,10 +3,7 @@ package com.order.processing.system.order.service.services.impl;
 import com.order.processing.system.order.service.dto.request.AddProductRequestDTO;
 import com.order.processing.system.order.service.dto.request.UpdateProductRequestDTO;
 import com.order.processing.system.order.service.dto.request.UpdateProductStockRequestDTO;
-import com.order.processing.system.proto.AddProductRequest;
-import com.order.processing.system.proto.ApiResponse;
-import com.order.processing.system.proto.ProductServiceGrpc;
-import com.order.processing.system.proto.ViewAllProductsRequest;
+import com.order.processing.system.proto.*;
 import io.grpc.StatusRuntimeException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -16,17 +13,20 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 
+import static com.order.processing.system.order.service.util.AppMessages.PRODUCT_STOCK_AVAILABLE;
+import static com.order.processing.system.order.service.util.AppMessages.PRODUCT_STOCK_UNAVAILABLE;
+
 @Service
 @RequiredArgsConstructor
 @Slf4j
 public class ProductGrpcService {
     private final ProductServiceGrpc.ProductServiceBlockingStub productServiceBlockingStub;
 
-    public ResponseEntity<com.order.processing.system.proto.ApiResponse> addProduct(AddProductRequestDTO productRequestDTO) {
+    public ResponseEntity<ApiResponse> addProduct(AddProductRequestDTO requestDTO) {
         AddProductRequest request = AddProductRequest.newBuilder()
-                .setName(productRequestDTO.getName())
-                .setQuantity(productRequestDTO.getQuantity())
-                .setUnitPrice(productRequestDTO.getUnitPrice())
+                .setName(requestDTO.getName())
+                .setQuantity(requestDTO.getQuantity())
+                .setUnitPrice(requestDTO.getUnitPrice())
                 .build();
         try {
             ApiResponse response = this.productServiceBlockingStub.addProduct(request);
@@ -35,27 +35,88 @@ public class ProductGrpcService {
             }
             return ResponseEntity.status(response.getCode()).body(response);
         } catch (StatusRuntimeException e) {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(
-                    ApiResponse.newBuilder()
-                            .setSuccess(false)
-                            .setCode(HttpStatus.BAD_REQUEST.value())
-                            .setStatus(HttpStatus.BAD_REQUEST.toString())
-                            .setMessage(e.getMessage())
-                            .addAllData(new ArrayList<>())
-                            .build());
+            return processBadRequestResponse(e);
         }
     }
 
-    public ResponseEntity<ApiResponse> updateProduct(UpdateProductRequestDTO updateProductRequestDTO) {
-        return null;
+    public ResponseEntity<ApiResponse> updateProduct(UpdateProductRequestDTO requestDTO) {
+        UpdateProductRequest request = UpdateProductRequest.newBuilder()
+                .setProductUuid(requestDTO.getProductUuid())
+                .setName(requestDTO.getName())
+                .setQuantity(requestDTO.getQuantity())
+                .setUnitPrice(requestDTO.getUnitPrice())
+                .build();
+        try {
+            ApiResponse response = this.productServiceBlockingStub.updateProduct(request);
+            if (response.getSuccess()) {
+                return ResponseEntity.status(HttpStatus.OK).body(response);
+            }
+            return ResponseEntity.status(response.getCode()).body(response);
+        } catch (StatusRuntimeException e) {
+            return processBadRequestResponse(e);
+        }
     }
 
-    public ResponseEntity<ApiResponse> updateStockAvailability(UpdateProductStockRequestDTO updateProductStockRequestDTO) {
-        return null;
+    public ResponseEntity<ApiResponse> updateStockAvailability(UpdateProductStockRequestDTO requestDTO) {
+        UpdateProductStockRequest request = UpdateProductStockRequest.newBuilder()
+                .setProductUuid(requestDTO.getProductUuid())
+                .setStockAvailable(requestDTO.getStockAvailable())
+                .build();
+        try {
+            ApiResponse response = this.productServiceBlockingStub.updateStockAvailability(request);
+            if (response.getSuccess()) {
+                return ResponseEntity.status(HttpStatus.OK).body(response);
+            }
+            return ResponseEntity.status(response.getCode()).body(response);
+        } catch (StatusRuntimeException e) {
+            return processBadRequestResponse(e);
+        }
     }
 
     public ResponseEntity<ApiResponse> checkStockAvailability(String productUuid) {
-        return null;
+        CheckStockRequest request = CheckStockRequest.newBuilder()
+                .setProductUuid(productUuid)
+                .build();
+        try {
+            ApiResponse response = this.productServiceBlockingStub.checkStockAvailability(request);
+            if (response.getSuccess()) {
+                ProductResponse productResponse = response.getData(0);
+                if (productResponse.getQuantity() <= 0) {
+                    return ResponseEntity.status(HttpStatus.OK).body(ApiResponse.newBuilder()
+                            .setSuccess(true)
+                            .setCode(HttpStatus.OK.value())
+                            .setStatus(HttpStatus.OK.toString())
+                            .setMessage(PRODUCT_STOCK_UNAVAILABLE)
+                            .build());
+                } else {
+                    return ResponseEntity.status(HttpStatus.OK).body(ApiResponse.newBuilder()
+                            .setSuccess(true)
+                            .setCode(HttpStatus.OK.value())
+                            .setStatus(HttpStatus.OK.toString())
+                            .setMessage(PRODUCT_STOCK_AVAILABLE)
+                            .addData(response.getData(0))
+                            .build());
+                }
+            }
+            return ResponseEntity.status(response.getCode()).body(response);
+        } catch (StatusRuntimeException e) {
+            return processBadRequestResponse(e);
+        }
+    }
+
+    public ResponseEntity<ApiResponse> getProductById(String productUuid) {
+        CheckStockRequest request = CheckStockRequest.newBuilder()
+                .setProductUuid(productUuid)
+                .build();
+        try {
+            ApiResponse response = this.productServiceBlockingStub.checkStockAvailability(request);
+            if (response.getSuccess()) {
+                return ResponseEntity.status(HttpStatus.OK).body(response);
+            }
+            return ResponseEntity.status(response.getCode()).body(response);
+        } catch (StatusRuntimeException e) {
+            return processBadRequestResponse(e);
+        }
     }
 
     public ResponseEntity<ApiResponse> viewAllProducts(Integer page, Integer size) {
@@ -70,18 +131,33 @@ public class ProductGrpcService {
             }
             return ResponseEntity.status(response.getCode()).body(response);
         } catch (StatusRuntimeException e) {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(
-                    ApiResponse.newBuilder()
-                            .setSuccess(false)
-                            .setCode(HttpStatus.BAD_REQUEST.value())
-                            .setStatus(HttpStatus.BAD_REQUEST.toString())
-                            .setMessage(e.getMessage())
-                            .addAllData(new ArrayList<>())
-                            .build());
+            return processBadRequestResponse(e);
         }
     }
 
     public ResponseEntity<ApiResponse> deleteProduct(String productUuid) {
-        return null;
+        DeleteProductRequest request = DeleteProductRequest.newBuilder()
+                .setProductUuid(productUuid)
+                .build();
+        try {
+            ApiResponse response = this.productServiceBlockingStub.deleteProduct(request);
+            if (response.getSuccess()) {
+                return ResponseEntity.status(HttpStatus.OK).body(response);
+            }
+            return ResponseEntity.status(response.getCode()).body(response);
+        } catch (StatusRuntimeException e) {
+            return processBadRequestResponse(e);
+        }
+    }
+
+    private static ResponseEntity<ApiResponse> processBadRequestResponse(StatusRuntimeException e) {
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(
+                ApiResponse.newBuilder()
+                        .setSuccess(false)
+                        .setCode(HttpStatus.BAD_REQUEST.value())
+                        .setStatus(HttpStatus.BAD_REQUEST.toString())
+                        .setMessage(e.getMessage())
+                        .addAllData(new ArrayList<>())
+                        .build());
     }
 }

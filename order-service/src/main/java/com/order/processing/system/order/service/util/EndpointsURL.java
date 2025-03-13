@@ -15,6 +15,7 @@ public class EndpointsURL {
     public static final String UPDATE_PRODUCT = "/product";
     public static final String UPDATE_STOCK_AVAILABILITY = "/product/update-stock";
     public static final String CHECK_PRODUCT_AVAILABILITY = "/product/check-stock";
+    public static final String VIEW_PRODUCT_BY_ID = "/product";
     public static final String VIEW_ALL_PRODUCTS = "/products";
     public static final String DELETE_PRODUCT = "/product";
 }
