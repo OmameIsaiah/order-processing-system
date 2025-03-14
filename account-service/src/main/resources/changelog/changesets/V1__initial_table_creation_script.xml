@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8" standalone="no"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog/1.9"
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog/1.9 http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-1.9.xsd">
+
+    <changeSet author="Isaiah Omame" id="create_users_roles_tables_1">
+        <sql>
+            <![CDATA[
+                CREATE TABLE IF NOT EXISTS users (
+                    id BIGINT AUTO_INCREMENT PRIMARY KEY,
+                    uuid VARCHAR(36) NOT NULL UNIQUE,
+                    name VARCHAR(100),
+                    email VARCHAR(255) NOT NULL UNIQUE,
+                    password VARCHAR(255) NOT NULL CHECK (CHAR_LENGTH(password) >= 8),
+                    user_type ENUM('ADMIN', 'USER') NOT NULL,
+                    user_token VARCHAR(255),
+                    onboarding_stage ENUM('STARTED', 'VERIFIED') DEFAULT 'STARTED',
+                    verified BOOLEAN DEFAULT FALSE,
+                    is_online BOOLEAN DEFAULT FALSE,
+                    otp_code VARCHAR(10),
+                    otp_expire_time VARCHAR(50),
+                    last_login DATETIME,
+                    last_modified DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+                    date_created DATETIME DEFAULT CURRENT_TIMESTAMP
+                ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+                CREATE TABLE IF NOT EXISTS roles (
+                    id BIGINT AUTO_INCREMENT PRIMARY KEY,
+                    uuid VARCHAR(36) NOT NULL UNIQUE,
+                    name VARCHAR(255) NOT NULL UNIQUE,
+                    description TEXT,
+                    permissions JSON,
+                    last_modified DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+                    date_created DATETIME DEFAULT CURRENT_TIMESTAMP
+                ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+                CREATE TABLE IF NOT EXISTS user_role (
+                    id BIGINT AUTO_INCREMENT PRIMARY KEY,
+                    uuid VARCHAR(36) NOT NULL UNIQUE,
+                    roleid BIGINT NOT NULL,
+                    userrole BIGINT NOT NULL,
+                    last_modified DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+                    date_created DATETIME DEFAULT CURRENT_TIMESTAMP,
+                    FOREIGN KEY (roleid) REFERENCES roles(id) ON DELETE CASCADE ON UPDATE CASCADE,
+                    FOREIGN KEY (userrole) REFERENCES users(id) ON DELETE CASCADE ON UPDATE CASCADE
+                ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+            ]]>
+        </sql>
+    </changeSet>
+</databaseChangeLog>

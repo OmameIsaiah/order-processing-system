@@ -9,6 +9,11 @@ spring:
       enabled: false
       import-check:
         enabled: false
+  kafka:
+    consumer:
+      group-id: notification-group-id
+    producer:
+      bootstrap-servers: http://${server.host}:19200
   datasource:
     hikari:
       minimum-idle: 5
@@ -50,10 +55,3 @@ spring:
         jdbc:
           time_zone: UTC+1
         show_sql: false
-app:
-  security:
-    authentication:
-      jwt:
-        base64-secret: NzhiMTQ2ZGQxNjYzOTc3OWJmNzJiMDc2NmZmMzhlZTdlNDdlZjk2YWQ3NWVkZTQ2ZjM4ZGE1MDU1ODVlMDQ0ZmY1ZDEyN2VmMmM5MDQ3MjEzZmI4M2M2ZGE0MjE4ZjZkODEzZTY4YjQ3ODExODE5ZWYzMTUzZDQ2N2Q2NWVkZTg=
-        token-validity-in-seconds: 86400
-        token-validity-in-seconds-for-remember-me: 2592000

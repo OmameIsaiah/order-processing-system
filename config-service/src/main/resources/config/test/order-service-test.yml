@@ -11,6 +11,11 @@ spring:
       enabled: false
       import-check:
         enabled: false
+  kafka:
+    consumer:
+      group-id: notification-group-id
+    producer:
+      bootstrap-servers: http://${server.host}:19300
   datasource:
     hikari:
       minimum-idle: 5

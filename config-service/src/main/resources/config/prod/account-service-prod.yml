@@ -11,6 +11,11 @@ spring:
       enabled: false
       import-check:
         enabled: false
+  kafka:
+    consumer:
+      group-id: notification-group-id
+    producer:
+      bootstrap-servers: http://${server.host}:19400
   datasource:
     hikari:
       minimum-idle: 5
@@ -40,3 +45,23 @@ spring:
         jdbc:
           time_zone: UTC+1
         show_sql: false
+
+
+app:
+  jwt:
+    authorities:
+      key: roles
+    expirationDateInMs: 86400000
+    header:
+      string: Authorization
+    jwtCookieName: order-ps
+    jwtRefreshCookieName: order-ps-refresh
+    refreshExpiration: 8640
+    refreshExpirationDateInMs: 8640
+    signing:
+      key: 20725b85bb97d75a04c275a18f5f1d873c4b7b4cd9b73042508082f968488f94
+    token:
+      prefix: Bearer
+      validity: 100
+
+#openssl rand -hex 32

@@ -1,0 +1,44 @@
+server:
+  port: 2004
+  host: localhost
+  servlet:
+    contextPath: /notification-service
+spring:
+  application:
+    name: notification-service
+  cloud:
+    config:
+      enabled: false
+      import-check:
+        enabled: false
+  kafka:
+    consumer:
+      group-id: notification-group-id
+    producer:
+      bootstrap-servers: http://${server.host}:19200
+
+  mail:
+    host: smtp.gmail.com
+    username: omameazy@gmail.com
+    port: 465
+    password: <EmailAccessToken>
+    properties:
+      mail:
+        smtp:
+          starttls:
+            required: true
+            enable: true
+          ssl:
+            enable: true
+          auth: true
+        transport:
+          protocol: smtp
+        debug: true
+    protocol: smtp
+    test-connection: false
+
+app:
+  mail:
+    sender:
+      name: Order Processing System
+      email: omameazy@gmail.com

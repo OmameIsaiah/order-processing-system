@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8" standalone="no"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog/1.9"
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog/1.9 http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-1.9.xsd">
+
+    <changeSet author="Isaiah Omame" id="insert_default_roles_1">
+        <sql>
+            <![CDATA[
+
+                INSERT IGNORE INTO `neptune_dev_store`.`roles`(`date_created`, `last_modified`, `uuid`, `description`, `name`, `permissions`)
+                VALUES
+                ('2025-03-10 10:30:10', '2025-03-10 10:30:10', "18b56dc6-9813-440a-8c82-baf2eb10f264",
+                 'Role for administrators', 'ROLE_ADMIN',
+                 JSON_ARRAY("CAN_VIEW_PRODUCTS", "CAN_SEARCH_PRODUCTS", "CAN_ADD_PRODUCT", "CAN_UPDATE_PRODUCT", "CAN_DELETE_PRODUCT",
+                            "CAN_ORDER_PRODUCT", "CAN_VIEW_ORDERS", "CAN_CANCEL_ORDER", "CAN_VIEW_USERS", "CAN_DELETE_USER",
+                            "CAN_ADD_ROLE", "CAN_UPDATE_ROLE", "CAN_DELETE_ROLE")),
+
+                ('2025-03-10 10:30:10', '2025-03-10 10:30:10', "cae15553-1148-49c1-8e9d-f3dea70fb4d1",
+                 'Role for users', 'ROLE_USER',
+                 JSON_ARRAY("CAN_VIEW_PRODUCTS", "CAN_SEARCH_PRODUCTS", "CAN_ORDER_PRODUCT", "CAN_VIEW_ORDERS", "CAN_CANCEL_ORDER"));
+
+            ]]>
+        </sql>
+    </changeSet>
+</databaseChangeLog>
