@@ -1,0 +1,18 @@
+version: '3'
+services:
+  test-inventory-service:
+    build:
+      context: .
+      dockerfile: DockerfileTest
+    image: test-inventory-service:1.0
+    restart: always
+    container_name: test-inventory-service
+    networks:
+      - test_order_ps_network
+    ports:
+      - "3002:3002"
+
+networks:
+  test_order_ps_network:
+    external: true
+    driver: bridge

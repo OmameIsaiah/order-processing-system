@@ -1,0 +1,18 @@
+version: '3'
+services:
+  prod-account-service:
+    build:
+      context: .
+      dockerfile: DockerfileProd
+    image: prod-account-service:1.0
+    restart: always
+    container_name: prod-account-service
+    networks:
+      - prod_order_ps_network
+    ports:
+      - "4001:4001"
+
+networks:
+  prod_order_ps_network:
+    external: true
+    driver: bridge

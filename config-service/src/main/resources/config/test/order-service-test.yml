@@ -15,7 +15,7 @@ spring:
     consumer:
       group-id: notification-group-id
     producer:
-      bootstrap-servers: http://${server.host}:19300
+      bootstrap-servers: http://${server.host}:19202
   datasource:
     hikari:
       minimum-idle: 5
@@ -24,11 +24,23 @@ spring:
       idle-timeout: 600000.0
       max-lifetime: 1800000
     driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://localhost:3331/neptune_test_store?allowPublicKeyRetrieval=true&useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC&autoReconnect=true&useSSL=false&noAccessToProcedureBodies=true
-    username: root
-    password: password
+    url: jdbc:mysql://${server.host}:8803/neptune_test_store?createDatabaseIfNotExist=true&allowPublicKeyRetrieval=true&useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC&autoReconnect=true&useSSL=false&noAccessToProcedureBodies=true
+    username: 'root'
+    password: 'test@OrderPS_2025'
+    jpa:
+      database-platform: org.hibernate.dialect.MySQLDialect
   jmx:
-    default-domain: account-service
+    default-domain: order-service
+
+  liquibase:
+    contexts: test
+    url: jdbc:mysql://${server.host}:8803/neptune_test_store?createDatabaseIfNotExist=true&allowPublicKeyRetrieval=true&useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC&autoReconnect=true&useSSL=false&noAccessToProcedureBodies=true
+    user: 'root'
+    password: 'test@OrderPS_2025'
+    change-log: classpath:/changelog/db.changelog-master.xml
+    enabled: true
+    dropFirst: false
+
   jpa:
     open-in-view: false
     database-platform: org.hibernate.dialect.MySQLDialect

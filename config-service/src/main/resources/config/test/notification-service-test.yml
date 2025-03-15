@@ -15,7 +15,7 @@ spring:
     consumer:
       group-id: notification-group-id
     producer:
-      bootstrap-servers: http://${server.host}:19300
+      bootstrap-servers: http://${server.host}:19202
 
   mail:
     host: smtp.gmail.com
@@ -37,8 +37,8 @@ spring:
     protocol: smtp
     test-connection: false
 
-  app:
-    mail:
-      sender:
-        name: Order Processing System
-        email: omameazy@gmail.com
+app:
+  mail:
+    sender:
+      name: Order Processing System
+      email: omameazy@gmail.com

@@ -1,0 +1,18 @@
+version: '3'
+services:
+  prod-order-service:
+    build:
+      context: .
+      dockerfile: DockerfileProd
+    image: prod-order-service:1.0
+    restart: always
+    container_name: prod-order-service
+    networks:
+      - prod_order_ps_network
+    ports:
+      - "4003:4003"
+
+networks:
+  prod_order_ps_network:
+    external: true
+    driver: bridge

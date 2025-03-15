@@ -24,20 +24,23 @@ spring:
       idle-timeout: 600000.0
       max-lifetime: 1800000
     driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://${server.host}:3306/neptune_dev_store?createDatabaseIfNotExist=true&allowPublicKeyRetrieval=true&useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC&autoReconnect=true&useSSL=false&noAccessToProcedureBodies=true
+    url: jdbc:mysql://${server.host}:8801/neptune_dev_store?createDatabaseIfNotExist=true&allowPublicKeyRetrieval=true&useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC&autoReconnect=true&useSSL=false&noAccessToProcedureBodies=true
     username: 'root'
-    password: 'david_ISAIAH_1234#$'
+    password: 'dev@OrderPS_2025'
+    jpa:
+      database-platform: org.hibernate.dialect.MySQLDialect
   jmx:
     default-domain: order-service
 
   liquibase:
     contexts: dev
-    url: jdbc:mysql://${server.host}:3306/neptune_dev_store?createDatabaseIfNotExist=true&allowPublicKeyRetrieval=true&useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC&autoReconnect=true&useSSL=false&noAccessToProcedureBodies=true
+    url: jdbc:mysql://${server.host}:8801/neptune_dev_store?createDatabaseIfNotExist=true&allowPublicKeyRetrieval=true&useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC&autoReconnect=true&useSSL=false&noAccessToProcedureBodies=true
     user: 'root'
-    password: 'david_ISAIAH_1234#$'
+    password: 'dev@OrderPS_2025'
     change-log: classpath:/changelog/db.changelog-master.xml
     enabled: true
     dropFirst: false
+
   jpa:
     open-in-view: false
     database-platform: org.hibernate.dialect.MySQLDialect

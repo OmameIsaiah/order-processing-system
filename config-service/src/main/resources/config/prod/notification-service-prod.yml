@@ -15,7 +15,7 @@ spring:
     consumer:
       group-id: notification-group-id
     producer:
-      bootstrap-servers: http://${server.host}:19400
+      bootstrap-servers: http://${server.host}:19201
 
   mail:
     host: smtp.gmail.com

@@ -1,0 +1,18 @@
+version: '3'
+services:
+  prod-config-service:
+    build:
+      context: .
+      dockerfile: DockerfileProd
+    image: prod-config-service:1.0
+    restart: always
+    container_name: prod-config-service
+    networks:
+      - prod_order_ps_network
+    ports:
+      - "4000:4000"
+
+networks:
+  prod_order_ps_network:
+    external: true
+    driver: bridge

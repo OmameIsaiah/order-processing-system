@@ -1,0 +1,28 @@
+# STAGE 1: Build the application
+FROM maven:3.8.4-openjdk-17-slim AS build
+
+#Working Directory for the API
+WORKDIR /app/api
+
+# Copy the necessary project files
+COPY ./pom.xml .
+COPY ./src ./src
+#COPY ./inventory-service.iml ./inventory-service.iml
+#COPY ./mvnw ./mvnw
+
+# Build the application
+RUN mvn clean install
+#RUN ./mvnw clean install
+
+# STAGE 2: Create the Docker image
+FROM openjdk:17-jdk-slim
+
+WORKDIR /app/api
+# Copy the built JAR file from the previous stage
+COPY --from=build /app/api/target/inventory-service.jar ./inventory-service.jar
+
+# Expose the desired port(s)
+EXPOSE 4002
+
+# Define the command to run the application
+ENTRYPOINT ["java", "-jar", "inventory-service.jar"]

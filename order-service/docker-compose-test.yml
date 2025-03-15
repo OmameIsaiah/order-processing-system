@@ -1,0 +1,18 @@
+version: '3'
+services:
+  test-order-service:
+    build:
+      context: .
+      dockerfile: DockerfileTest
+    image: test-order-service:1.0
+    restart: always
+    container_name: test-order-service
+    networks:
+      - test_order_ps_network
+    ports:
+      - "3003:3003"
+
+networks:
+  test_order_ps_network:
+    external: true
+    driver: bridge

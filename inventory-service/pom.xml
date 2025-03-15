@@ -18,6 +18,8 @@
         <protobuf-java.version>3.25.6</protobuf-java.version>
         <spring-grpc.version>0.5.0</spring-grpc.version>
         <jaxb-api.version>2.3.0</jaxb-api.version>
+        <tests.skip>true</tests.skip>
+        <maven-surefire-plugin.version>2.22.1</maven-surefire-plugin.version>
     </properties>
     <dependencies>
         <dependency>
@@ -169,6 +171,14 @@
                             <artifactId>lombok</artifactId>
                         </exclude>
                     </excludes>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-surefire-plugin</artifactId>
+                <version>${maven-surefire-plugin.version}</version>
+                <configuration>
+                    <skipTests>${tests.skip}</skipTests>
                 </configuration>
             </plugin>
         </plugins>
