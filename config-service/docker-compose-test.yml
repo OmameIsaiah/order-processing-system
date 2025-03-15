@@ -1,9 +1,8 @@
-version: '3'
 services:
   test-config-service:
     build:
-      context: .
-      dockerfile: DockerfileTest
+      context: ../
+      dockerfile: config-service/DockerfileTest
     image: test-config-service:1.0
     restart: always
     container_name: test-config-service

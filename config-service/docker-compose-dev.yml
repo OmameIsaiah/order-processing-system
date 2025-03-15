@@ -1,9 +1,8 @@
-version: '3'
 services:
   dev-config-service:
     build:
-      context: .
-      dockerfile: DockerfileDev
+      context: ../
+      dockerfile: config-service/DockerfileDev
     image: dev-config-service:1.0
     restart: always
     container_name: dev-config-service

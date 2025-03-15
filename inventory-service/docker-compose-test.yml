@@ -1,9 +1,8 @@
-version: '3'
 services:
   test-inventory-service:
     build:
-      context: .
-      dockerfile: DockerfileTest
+      context: ../
+      dockerfile: inventory-service/DockerfileTest
     image: test-inventory-service:1.0
     restart: always
     container_name: test-inventory-service

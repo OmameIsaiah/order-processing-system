@@ -1,9 +1,8 @@
-version: '3'
 services:
   prod-notification-service:
     build:
-      context: .
-      dockerfile: DockerfileProd
+      context: ../
+      dockerfile: notification-service/DockerfileProd
     image: prod-notification-service:1.0
     restart: always
     container_name: prod-notification-service

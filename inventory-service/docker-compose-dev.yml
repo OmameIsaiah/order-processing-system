@@ -1,9 +1,8 @@
-version: '3'
 services:
   dev-inventory-service:
     build:
-      context: .
-      dockerfile: DockerfileDev
+      context: ../
+      dockerfile: inventory-service/DockerfileDev
     image: dev-inventory-service:1.0
     restart: always
     container_name: dev-inventory-service

@@ -15,7 +15,7 @@ spring:
     consumer:
       group-id: notification-group-id
     producer:
-      bootstrap-servers: http://${server.host}:19200
+      bootstrap-servers: http://${server.host}:19206
   datasource:
     hikari:
       minimum-idle: 5
@@ -76,3 +76,11 @@ app:
       validity: 100
 
 #openssl rand -hex 32
+
+management:
+  metrics:
+    export:
+      defaults:
+        enabled: false
+    system:
+      enabled: false

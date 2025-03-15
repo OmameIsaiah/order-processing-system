@@ -15,13 +15,13 @@ spring:
     consumer:
       group-id: notification-group-id
     producer:
-      bootstrap-servers: http://${server.host}:19200
+      bootstrap-servers: http://${server.host}:19206
 
   mail:
     host: smtp.gmail.com
     username: omameazy@gmail.com
     port: 465
-    password: <EmailAccessToken>
+    password: lrtciqzoohrtkmuq
     properties:
       mail:
         smtp:
@@ -42,3 +42,12 @@ app:
     sender:
       name: Order Processing System
       email: omameazy@gmail.com
+
+
+management:
+  metrics:
+    export:
+      defaults:
+        enabled: false
+    system:
+      enabled: false

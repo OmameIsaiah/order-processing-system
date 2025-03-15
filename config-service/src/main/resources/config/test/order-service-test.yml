@@ -57,3 +57,11 @@ spring:
         jdbc:
           time_zone: UTC+1
         show_sql: false
+
+management:
+  metrics:
+    export:
+      defaults:
+        enabled: false
+    system:
+      enabled: false

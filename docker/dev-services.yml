@@ -1,5 +1,3 @@
-version: '3'
-
 services:
   zookeeper:
     image: confluentinc/cp-zookeeper:latest
@@ -23,13 +21,13 @@ services:
     depends_on:
       - zookeeper
     ports:
-      - "9200:9200"
-      - "19200:19200"
+      - "9206:9206"
+      - "19206:19206"
     environment:
       KAFKA_BROKER_ID: 1
       KAFKA_ZOOKEEPER_CONNECT: 'zookeeper:2112'
       KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: PLAINTEXT:PLAINTEXT,PLAINTEXT_INTERNAL:PLAINTEXT,PLAINTEXT_HOST:PLAINTEXT
-      KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://kafka:9200,PLAINTEXT_INTERNAL://localhost:19200
+      KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://kafka:9206,PLAINTEXT_INTERNAL://localhost:19206
       KAFKA_INTER_BROKER_LISTENER_NAME: PLAINTEXT_INTERNAL
       KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
       KAFKA_ADVERTISED_HOST_NAME: kafka
@@ -37,7 +35,7 @@ services:
       dev_order_ps_network:
         ipv4_address: 173.20.1.2
 
-  order_ps_mysql:
+  mysql:
     image: mysql:latest
     restart: always
     container_name: dev-order-ps-mysql
@@ -53,7 +51,7 @@ services:
       --max-connections=10000 --bind-address=0.0.0.0
 
     ports:
-      - "8801:3317"
+      - "8801:3306"
     healthcheck:
       test: [ 'CMD', 'mysqladmin', 'ping', '-h', '127.0.0.1' ]
       interval: 5s
@@ -66,10 +64,10 @@ services:
 
 networks:
   dev_order_ps_network:
-    #external: true
+    external: true
     driver: bridge
-    name: dev_order_ps_network
-    ipam:
-      config:
-        - subnet: 173.20.0.0/16
-          ip_range: 173.20.0.0/24
+#    name: dev_order_ps_network
+#    ipam:
+#      config:
+#        - subnet: 173.20.0.0/16  # Allows 173.20.0.0 to 173.20.255.255
+#          ip_range: 173.20.1.0/24  # Allows 173.20.1.1 to 173.20.1.254

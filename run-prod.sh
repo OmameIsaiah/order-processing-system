@@ -4,7 +4,7 @@ echo "Shutdown or stop any previous kafka, zookeeper and mysql servers that is r
 docker-compose -f docker/prod-services.yml down
 
 echo "Create the docker network for the application"
-docker network create --driver bridge prod_order_ps_network
+docker network create --driver bridge --subnet=173.21.0.0/16 --ip-range=173.21.1.0/24 prod_order_ps_network
 
 echo "Build the docker containers for kafka, zookeeper and mysql servers"
 docker-compose -f docker/prod-services.yml up -d --build

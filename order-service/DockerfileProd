@@ -2,27 +2,32 @@
 FROM maven:3.8.4-openjdk-17-slim AS build
 
 #Working Directory for the API
-WORKDIR /app/api
+WORKDIR /app
 
-# Copy the necessary project files
-COPY ./pom.xml .
-COPY ./src ./src
-#COPY ./order-service.iml ./order-service.iml
-#COPY ./mvnw ./mvnw
+# Copy parent POM
+COPY . /app/order-processing-system
 
-# Build the application
+WORKDIR /app/order-processing-system
+# Install parent POM first
+RUN mvn clean install -N
+
+# Move into the service directory
+WORKDIR /app/order-processing-system/order-service
+# Build the service
 RUN mvn clean install
-#RUN ./mvnw clean install
+
 
 # STAGE 2: Create the Docker image
-FROM openjdk:17-jdk-slim
+#FROM openjdk:17-jdk-slim
+FROM eclipse-temurin:17-jre-alpine
 
-WORKDIR /app/api
+WORKDIR /app
 # Copy the built JAR file from the previous stage
-COPY --from=build /app/api/target/order-service.jar ./order-service.jar
+COPY --from=build /app/order-processing-system/order-service/target/order-service.jar ./order-service.jar
 
 # Expose the desired port(s)
 EXPOSE 4003
 
 # Define the command to run the application
-ENTRYPOINT ["java", "-jar", "order-service.jar"]
+#ENTRYPOINT ["java", "-jar", "order-service.jar"]
+ENTRYPOINT ["java", "-XX:-UseContainerSupport", "-jar", "order-service.jar"]

@@ -1,9 +1,8 @@
-version: '3'
 services:
   prod-inventory-service:
     build:
-      context: .
-      dockerfile: DockerfileProd
+      context: ../
+      dockerfile: inventory-service/DockerfileProd
     image: prod-inventory-service:1.0
     restart: always
     container_name: prod-inventory-service

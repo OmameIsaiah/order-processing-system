@@ -1,9 +1,8 @@
-version: '3'
 services:
   dev-notification-service:
     build:
-      context: .
-      dockerfile: DockerfileDev
+      context: ../
+      dockerfile: notification-service/DockerfileDev
     image: dev-notification-service:1.0
     restart: always
     container_name: dev-notification-service

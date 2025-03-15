@@ -1,9 +1,8 @@
-version: '3'
 services:
   prod-account-service:
     build:
-      context: .
-      dockerfile: DockerfileProd
+      context: ../
+      dockerfile: account-service/DockerfileProd
     image: prod-account-service:1.0
     restart: always
     container_name: prod-account-service

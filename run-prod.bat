@@ -5,7 +5,9 @@ REM Shutdown or stop any previous kafka, zookeeper and mysql servers that is run
 call docker-compose -f docker/prod-services.yml down
 
 REM Create the docker network for the application
-call docker network create --driver bridge prod_order_ps_network
+REM call docker network create --driver bridge prod_order_ps_network
+REM docker network rm prod_order_ps_network
+call docker network create --driver bridge --subnet=173.21.0.0/16 --ip-range=173.21.1.0/24 prod_order_ps_network
 
 REM Build the docker containers for kafka, zookeeper and mysql servers
 call docker-compose -f docker/prod-services.yml up -d --build

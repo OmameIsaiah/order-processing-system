@@ -1,9 +1,8 @@
-version: '3'
 services:
   test-notification-service:
     build:
-      context: .
-      dockerfile: DockerfileTest
+      context: ../
+      dockerfile: notification-service/DockerfileTest
     image: test-notification-service:1.0
     restart: always
     container_name: test-notification-service

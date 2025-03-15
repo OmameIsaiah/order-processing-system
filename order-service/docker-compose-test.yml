@@ -1,9 +1,8 @@
-version: '3'
 services:
   test-order-service:
     build:
-      context: .
-      dockerfile: DockerfileTest
+      context: ../
+      dockerfile: order-service/DockerfileTest
     image: test-order-service:1.0
     restart: always
     container_name: test-order-service

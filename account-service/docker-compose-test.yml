@@ -1,9 +1,8 @@
-version: '3'
 services:
   test-account-service:
     build:
-      context: .
-      dockerfile: DockerfileTest
+      context: ../
+      dockerfile: account-service/DockerfileTest
     image: test-account-service:1.0
     restart: always
     container_name: test-account-service

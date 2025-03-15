@@ -21,7 +21,7 @@ spring:
     host: smtp.gmail.com
     username: omameazy@gmail.com
     port: 465
-    password: <EmailAccessToken>
+    password: lrtciqzoohrtkmuq
     properties:
       mail:
         smtp:
@@ -42,3 +42,11 @@ spring:
       sender:
         name: Order Processing System
         email: omameazy@gmail.com
+
+management:
+  metrics:
+    export:
+      defaults:
+        enabled: false
+    system:
+      enabled: false

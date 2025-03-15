@@ -76,3 +76,12 @@ app:
       validity: 100
 
 #openssl rand -hex 32
+
+
+management:
+  metrics:
+    export:
+      defaults:
+        enabled: false
+    system:
+      enabled: false

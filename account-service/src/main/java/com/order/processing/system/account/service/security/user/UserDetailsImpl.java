@@ -17,15 +17,17 @@ import java.util.stream.Collectors;
 public class UserDetailsImpl implements UserDetails {
     private String name;
     private String userType;
+    private String userId;
     private String username;
     private String password;
     private Collection<? extends GrantedAuthority> roles;
     private Collection<? extends GrantedAuthority> authorities;
 
-    public UserDetailsImpl(String name, String userType, String username, String password,
+    public UserDetailsImpl(String name, String userType, String userId, String username, String password,
                            Collection<? extends GrantedAuthority> roles,
                            Collection<? extends GrantedAuthority> authorities) {
         this.name = name;
+        this.userId = userId;
         this.userType = userType;
         this.username = username;
         this.password = password;
@@ -75,6 +77,7 @@ public class UserDetailsImpl implements UserDetails {
         return new UserDetailsImpl(
                 users.getName(),
                 users.getUserType().label,
+                users.getUuid(),
                 users.getEmail(),
                 users.getPassword(),
                 processUserRoles(users),
