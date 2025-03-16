@@ -7,6 +7,7 @@ import com.order.processing.system.order.service.dto.response.ApiResponse;
 import com.order.processing.system.order.service.services.OrderService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.MediaType;
@@ -26,8 +27,9 @@ public class OrderRoute {
     @Operation(
             summary = "Endpoint for creating orders",
             description = "Endpoint for creating orders")
-    public ResponseEntity<ApiResponse> createOrder(@RequestBody @Valid CreateOrderRequestDTO payload) {
-        return orderService.createOrder(payload);
+    public ResponseEntity<ApiResponse> createOrder(@RequestBody @Valid CreateOrderRequestDTO payload,
+                                                   HttpServletRequest httpServletRequest) {
+        return orderService.createOrder(payload, httpServletRequest);
     }
 
     @PostMapping(value = CONFIRM_ORDER, produces = MediaType.APPLICATION_JSON_VALUE)

@@ -82,3 +82,7 @@ app:
       #host: http://test-inventory-service #For connection inside docker, use container name or container IP address
       host: http://173.22.1.7 #For connection inside docker, use container name or container IP address
       port: 3002
+  jwt:
+    signing:
+      key: 20725b85bb97d75a04c275a18f5f1d873c4b7b4cd9b73042508082f968488f94
+

@@ -14,12 +14,14 @@ import com.order.processing.system.order.service.model.Order;
 import com.order.processing.system.order.service.repository.OrderRepository;
 import com.order.processing.system.order.service.services.OrderService;
 import com.order.processing.system.order.service.util.Mapper;
+import com.order.processing.system.order.service.util.SecurityUtils;
 import com.order.processing.system.order.service.util.Utils;
 import com.order.processing.system.proto.CheckStockRequest;
 import com.order.processing.system.proto.ProductResponse;
 import com.order.processing.system.proto.ProductServiceGrpc;
 import com.order.processing.system.proto.ViewAllProductsRequest;
 import io.grpc.StatusRuntimeException;
+import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
@@ -47,9 +49,13 @@ public class OrderServiceImpl implements OrderService {
     private final ProductGrpcService productService;
 
     @Override
-    public ResponseEntity<ApiResponse> createOrder(CreateOrderRequestDTO createOrderRequestDTO) {
+    public ResponseEntity<ApiResponse> createOrder(CreateOrderRequestDTO createOrderRequestDTO,
+                                                   HttpServletRequest httpServletRequest) {
+        String userid = SecurityUtils.getUseridFromRequestHeader(httpServletRequest);
         ProductResponseDTO productResponse = checkProductAvailabilityInInventoryService(createOrderRequestDTO);
         Order mappedOrder = Mapper.mapOrderRequestDTOToEntityClass(createOrderRequestDTO);
+        String userId = Objects.isNull(userid) ? "anonymous" : userid;
+        mappedOrder.setUserId(userId);
         mappedOrder.setUuid(UUID.randomUUID().toString());
         mappedOrder.setProduct(productResponse.getName());
         mappedOrder.setStatus(OrderStatus.PENDING);
@@ -191,9 +197,13 @@ public class OrderServiceImpl implements OrderService {
 
     @Override
     public ResponseEntity<ApiResponse> viewUsersOrders(String userId, Integer page, Integer size) {
+        if (Objects.isNull(userId)) {
+            throw new BadRequestException(NULL_USER_UUID);
+        }
         Sort orders = Sort.by("dateCreated").descending();
-        //TODO When you add users account, update this to fetch only orders placed by a user.
-        Page<Order> list = orderRepository.findAllOrders(PageRequest.of((Objects.isNull(page) ? 0 : page), (Objects.isNull(size) ? 50 : size), orders));
+        Page<Order> list = orderRepository.findOrderByUserId(
+                userId,
+                PageRequest.of((Objects.isNull(page) ? 0 : page), (Objects.isNull(size) ? 50 : size), orders));
         if (list.isEmpty() || Objects.isNull(list)) {
             throw new RecordNotFoundException(NO_ORDER_FOUND);
         }

@@ -82,3 +82,7 @@ app:
       #host: http://dev-inventory-service #For connection inside docker, use container name or container IP address
       host: http://173.20.1.7 #For connection inside docker, use container name or container IP address
       port: 2002
+  jwt:
+    signing:
+      key: 20725b85bb97d75a04c275a18f5f1d873c4b7b4cd9b73042508082f968488f94
+

@@ -22,6 +22,8 @@
         <jaxb-api.version>2.3.0</jaxb-api.version>
         <tests.skip>true</tests.skip>
         <maven-surefire-plugin.version>2.22.1</maven-surefire-plugin.version>
+        <jjwt.version>0.9.1</jjwt.version>
+        <jackson-datatype-protobuf.version>0.9.17</jackson-datatype-protobuf.version>
     </properties>
     <dependencies>
         <dependency>
@@ -107,7 +109,12 @@
         <dependency>
             <groupId>com.hubspot.jackson</groupId>
             <artifactId>jackson-datatype-protobuf</artifactId>
-            <version>0.9.17</version>
+            <version>${jackson-datatype-protobuf.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>io.jsonwebtoken</groupId>
+            <artifactId>jjwt</artifactId>
+            <version>${jjwt.version}</version>
         </dependency>
     </dependencies>
     <dependencyManagement>
