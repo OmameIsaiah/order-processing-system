@@ -12,22 +12,15 @@ import org.springframework.context.annotation.Configuration;
 @Slf4j
 public class GrpcClientConfig {
 
-    @Value("${spring.profiles.active}")
-    private String profile;
+    @Value("${app.grpc.inventory-service.host}")
+    private String inventoryServiceGprsHost;
+    @Value("${app.grpc.inventory-service.port}")
+    private Integer inventoryServiceGprsPort;
 
     @Bean
     public ManagedChannel grpcChannel() {
-        String host = "localhost";
-        int port = 2002;
-        if ("test".equalsIgnoreCase(profile)) {
-            host = "localhost";
-            port = 3002;
-        } else if ("prod".equalsIgnoreCase(profile)) {
-            host = "localhost";
-            port = 4002;
-        }
-        log.info("Connecting to gRPC server at " + host + ":" + port);
-        return ManagedChannelBuilder.forAddress(host, port)
+        log.info("Connecting to gRPC server at " + inventoryServiceGprsHost + ":" + inventoryServiceGprsPort);
+        return ManagedChannelBuilder.forAddress(inventoryServiceGprsHost, inventoryServiceGprsPort)
                 .usePlaintext() // Use TLS in production
                 .build();
     }

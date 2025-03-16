@@ -7,7 +7,10 @@ services:
     restart: always
     container_name: prod-notification-service
     networks:
-      - prod_order_ps_network
+      prod_order_ps_network:
+        ipv4_address: 173.21.1.8
+#    networks:
+#      - prod_order_ps_network
     ports:
       - "4004:4004"
 

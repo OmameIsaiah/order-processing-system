@@ -7,7 +7,10 @@ services:
     restart: always
     container_name: test-notification-service
     networks:
-      - test_order_ps_network
+      test_order_ps_network:
+        ipv4_address: 173.22.1.8
+#    networks:
+#      - test_order_ps_network
     ports:
       - "3004:3004"
 

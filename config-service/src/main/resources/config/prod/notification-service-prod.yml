@@ -1,6 +1,15 @@
 server:
   port: 4004
   host: localhost
+
+  #Use localhost for db connection outside docker, use container IP address or name for connection within docker
+  #db-host: localhost
+  #db-host: prod-order-ps-mysql
+  db-host: 173.21.1.3
+  #Use localhost for kafka connection outside docker, use container IP address or name for connection within docker
+  #kafka-host: localhost
+  #kafka-host: prod-kafka
+  kafka-host: 173.21.1.2
   servlet:
     contextPath: /notification-service
 spring:
@@ -15,13 +24,13 @@ spring:
     consumer:
       group-id: notification-group-id
     producer:
-      bootstrap-servers: http://${server.host}:19201
+      bootstrap-servers: http://${server.kafka-host}:19201
 
   mail:
     host: smtp.gmail.com
-    username: omameazy@gmail.com
+    username: {cipher}AYCOZp12A33SpMjYEtUIgc78UJq481mKFaofeDjxfysEThmwkgXJB+aQ8PxBnJElcrldFVxG0GOtfkYfJUzijlY3XOx+XKu6Ak3TDp3nk7Beah1MchY+tHctJdyRts0IeWTHadBLpu+cB/poBndiScalWZ9RXzjEExdS7aQZwYEq9LIEfB4rEg1CPkQkOlOyHn8Ee16dmlWWdaSab17PWMra++smHiCEfdNIDKphv0tk9QqqSjW3H81PnvFWcJMJeeFyqXS6OIBmk0bQmprTe3D9ysjp0R/Wczk5u8y0EhdZAT/2Ld7Jd+RN7H8n7wrKr+QvpRAIW/CSs2ezXWzXzvYCB1WjYee60a1W2GzCJ9elanYJdiJwGVBSUuqL7LKI3OMARsmi6cv0j57eWes7iPQcGHuiGoF08Ku2OlLmksTE6x1twSWlzTPlvWovoyOUKB/QpCcJFsZDE856xJVDvz7Mm4uQCduVuzrP3Q4/Bbi+nvcmND8luiUwOjFC2Ga27BLkflA6MSPNtvlrgFk++iwFvUl4U2WW2gOAsvKyJ/VWUSzXWJF0e4wau2YU9zAn4ro=
     port: 465
-    password: lrtciqzoohrtkmuq
+    password: {cipher}AYBHL1HFwFPHqE4i8QQjR+i/k0S4CnFqMirYM0Ok+wjQIlnWZ3Esn+zi45EXOC3LNa2knVGK2ZwxX7ngZEHRCDQRwYQ7V+dk11pHxrNcL4X6Yg9bKoWFBrtHweApsHvvQsMQvGv1DTG0UDq43MdEdNGTf5EY0VH2lz4hWHiKtzLUDVVC4X9Q6P+TKeqDWjz0gveJdAQwmZiFcM7GewKnCnHRngmfuixp5yYnNE9niPuljdpIwkAtreo0bHj/7cyePHD2e9jNhkUKXWmVfk4XsjLZJEem+1tY1LmyRQYNEUhxE/1iYthtTLkkFX9GozuvSK8uNaZ57sDAGBeiE5MAA5BlvE1RPTCP5j9dynvdnrJDCx4wps5rSeVWEUsN6aO+XXsZK9PcWvVfnGsuXI+ZUx/tIBGXX3yMZnGVIan/6v7to1oxKdDonRI5iq1QgnsmuVpUKFZFFYS/7usNSHLG953etpn4JI2aIL6LyaxKtvgPaTqSnTdmGoShtjAV8b1mnmZIBvteT2O3Iy8fopXSUKDLE1TybkPH7BtUYPVHTjvDNvR3XwQU7fuSJjxle2VBmcM=
     properties:
       mail:
         smtp:
@@ -37,11 +46,12 @@ spring:
     protocol: smtp
     test-connection: false
 
-  app:
-    mail:
-      sender:
-        name: Order Processing System
-        email: omameazy@gmail.com
+app:
+  mail:
+    sender:
+      name: Order Processing System
+      email: {cipher}AYCOZp12A33SpMjYEtUIgc78UJq481mKFaofeDjxfysEThmwkgXJB+aQ8PxBnJElcrldFVxG0GOtfkYfJUzijlY3XOx+XKu6Ak3TDp3nk7Beah1MchY+tHctJdyRts0IeWTHadBLpu+cB/poBndiScalWZ9RXzjEExdS7aQZwYEq9LIEfB4rEg1CPkQkOlOyHn8Ee16dmlWWdaSab17PWMra++smHiCEfdNIDKphv0tk9QqqSjW3H81PnvFWcJMJeeFyqXS6OIBmk0bQmprTe3D9ysjp0R/Wczk5u8y0EhdZAT/2Ld7Jd+RN7H8n7wrKr+QvpRAIW/CSs2ezXWzXzvYCB1WjYee60a1W2GzCJ9elanYJdiJwGVBSUuqL7LKI3OMARsmi6cv0j57eWes7iPQcGHuiGoF08Ku2OlLmksTE6x1twSWlzTPlvWovoyOUKB/QpCcJFsZDE856xJVDvz7Mm4uQCduVuzrP3Q4/Bbi+nvcmND8luiUwOjFC2Ga27BLkflA6MSPNtvlrgFk++iwFvUl4U2WW2gOAsvKyJ/VWUSzXWJF0e4wau2YU9zAn4ro=
+
 
 management:
   metrics:
@@ -50,3 +60,6 @@ management:
         enabled: false
     system:
       enabled: false
+
+#Endpoint for encrypting value: [POST] http://localhost:2000/encrypt
+#Endpoint for decrypting values: [POST] http://localhost:2000/decrypt

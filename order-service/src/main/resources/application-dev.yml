@@ -1,7 +1,11 @@
 spring:
   cloud:
     config:
-      uri: http://localhost:2000/config/dev
+      #uri: http://localhost:2000/config/dev #For connection from outside docker
+      #uri: http://173.20.1.5:2000/config/dev #For connection within docker, use IP address or container name
+      uri: http://dev-config-service:2000/config/dev #For connection within docker, use IP address or container name
       fail-fast: true
   config:
-    import: configserver:http://localhost:2000
+    #import: configserver:http://localhost:2000 #For connection from outside docker
+    #import: configserver:http://173.20.1.5:2000 #For connection within docker, use IP address or container name
+    import: configserver:http://dev-config-service:2000 #For connection within docker, use IP address or container name

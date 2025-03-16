@@ -1,6 +1,15 @@
 server:
   port: 2003
   host: localhost
+
+  #Use localhost for db connection outside docker, use container IP address or name for connection within docker
+  #db-host: localhost
+  #db-host: dev-order-ps-mysql
+  db-host: 173.20.1.3
+  #Use localhost for kafka connection outside docker, use container IP address or name for connection within docker
+  #kafka-host: localhost
+  #kafka-host: dev-kafka
+  kafka-host: 173.20.1.2
   servlet:
     contextPath: /order-service
 spring:
@@ -15,7 +24,7 @@ spring:
     consumer:
       group-id: notification-group-id
     producer:
-      bootstrap-servers: http://${server.host}:19206
+      bootstrap-servers: http://${server.kafka-host}:19206
   datasource:
     hikari:
       minimum-idle: 5
@@ -24,9 +33,9 @@ spring:
       idle-timeout: 600000.0
       max-lifetime: 1800000
     driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://${server.host}:8801/neptune_dev_store?createDatabaseIfNotExist=true&allowPublicKeyRetrieval=true&useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC&autoReconnect=true&useSSL=false&noAccessToProcedureBodies=true
-    username: 'root'
-    password: 'dev@OrderPS_2025'
+    url: jdbc:mysql://${server.db-host}:8801/neptune_dev_store?createDatabaseIfNotExist=true&allowPublicKeyRetrieval=true&useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC&autoReconnect=true&useSSL=false&noAccessToProcedureBodies=true
+    username: { cipher }AYBtlMAGu1JQUWOO9gppBe8G/Ml2BOh7jAOwCimI9ErlYGpef5Hg1y1NOyjn2CxMZ5i6tDOaKU1lKcaeH2yRuJilaZxSKBGNWZZAu+MuGR3nREdERALPRHblryPCa7B2XB1Ez6dINQIplYS1xjSa4UwrSHqrIKKtKlhQsoDTtUsR1YJsMKSCIDBtvRwAgNSrFsNQKT8wHg1JvrRc2kDn3eeX37+TtaZrpezF0PZUyi04NO62/fZnMvZtz0dE9/N0Td2Wk5AvlFG6kZGy3IEh03MwxFADCLq+PjLr8USOeASSFPi1AMZ21D+BNOzfOX1yai4Uf6m/vWRvHV29F7123DwckfPeLaHU5CmEnaU4ZmUXM0n4x3GnmdyLYiNWhwqZnOZZ0uaJRx9pXXrVx1VgqZrs3taQr4KdKaLC9vwWHoAecxJXzxBIv1+5h8PPp18CPrKU5mFEtJqntxyMgPuENu+IZDoUiNYqb7ZOiBfDxmucBZA1Naad9mhrCYdGjnGbjiYOeGbwSUPC/rgPqsSTNzBQKiSZgtEBwKK3OTTLsyNhWw==
+    password: { cipher }AYA7owFYF5ZwvBCQ+kHhO6ogRIU1NVuPzWKlu3BQPr8XO39uId3D9Ed5t4sATYlj0NaBH7rkjKEoGgT87YqAbUh4UgXNTSkHHpvHADiErq2x7dKzJtfYMYQachmKZYbaT1vt26+m60WBSzjYMB9NpihRit0VnjsqMvEA0hhFpij2+aI4BebCQZcw9fWyDLQzHoUdk5AphdBoL1c/9HMSvjE0qZ51qLi8kFnu9TcXyZZguAw/FeRrdhgV4NgZmXsaglpbQd2cz7zY8+v2bWuGPVJvoxOdPLAr3M8ofXrq6ojcGxY8innTbFGK/KBd89YEXX/oW16ip5aMNZAuX8GoXzx9szq98RvDeMv9AEXqLMvLQXJzYCV+hZ12g8afxL+lGsUqeL204yoltrxP5fvNbGDJY3yuNG5bqCFPen8s3OmE9qMpZ5hwOhCNR1DVe1QsStJKUqiJ/lnWcMrNqg+iUsWGj8oy+z8rMB+LXwwOtCd/VvdXdmB8PlDEW1PygTXy31XBYY/KtvKVpvPmbyt8NjpGYAtGwrhUIxYwbZJJGiusXWN+6g7fd3PQeaoCEAl1Kx8=
     jpa:
       database-platform: org.hibernate.dialect.MySQLDialect
   jmx:
@@ -34,9 +43,9 @@ spring:
 
   liquibase:
     contexts: dev
-    url: jdbc:mysql://${server.host}:8801/neptune_dev_store?createDatabaseIfNotExist=true&allowPublicKeyRetrieval=true&useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC&autoReconnect=true&useSSL=false&noAccessToProcedureBodies=true
-    user: 'root'
-    password: 'dev@OrderPS_2025'
+    url: jdbc:mysql://${server.db-host}:8801/neptune_dev_store?createDatabaseIfNotExist=true&allowPublicKeyRetrieval=true&useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC&autoReconnect=true&useSSL=false&noAccessToProcedureBodies=true
+    user: { cipher }AYBtlMAGu1JQUWOO9gppBe8G/Ml2BOh7jAOwCimI9ErlYGpef5Hg1y1NOyjn2CxMZ5i6tDOaKU1lKcaeH2yRuJilaZxSKBGNWZZAu+MuGR3nREdERALPRHblryPCa7B2XB1Ez6dINQIplYS1xjSa4UwrSHqrIKKtKlhQsoDTtUsR1YJsMKSCIDBtvRwAgNSrFsNQKT8wHg1JvrRc2kDn3eeX37+TtaZrpezF0PZUyi04NO62/fZnMvZtz0dE9/N0Td2Wk5AvlFG6kZGy3IEh03MwxFADCLq+PjLr8USOeASSFPi1AMZ21D+BNOzfOX1yai4Uf6m/vWRvHV29F7123DwckfPeLaHU5CmEnaU4ZmUXM0n4x3GnmdyLYiNWhwqZnOZZ0uaJRx9pXXrVx1VgqZrs3taQr4KdKaLC9vwWHoAecxJXzxBIv1+5h8PPp18CPrKU5mFEtJqntxyMgPuENu+IZDoUiNYqb7ZOiBfDxmucBZA1Naad9mhrCYdGjnGbjiYOeGbwSUPC/rgPqsSTNzBQKiSZgtEBwKK3OTTLsyNhWw==
+    password: { cipher }AYA7owFYF5ZwvBCQ+kHhO6ogRIU1NVuPzWKlu3BQPr8XO39uId3D9Ed5t4sATYlj0NaBH7rkjKEoGgT87YqAbUh4UgXNTSkHHpvHADiErq2x7dKzJtfYMYQachmKZYbaT1vt26+m60WBSzjYMB9NpihRit0VnjsqMvEA0hhFpij2+aI4BebCQZcw9fWyDLQzHoUdk5AphdBoL1c/9HMSvjE0qZ51qLi8kFnu9TcXyZZguAw/FeRrdhgV4NgZmXsaglpbQd2cz7zY8+v2bWuGPVJvoxOdPLAr3M8ofXrq6ojcGxY8innTbFGK/KBd89YEXX/oW16ip5aMNZAuX8GoXzx9szq98RvDeMv9AEXqLMvLQXJzYCV+hZ12g8afxL+lGsUqeL204yoltrxP5fvNbGDJY3yuNG5bqCFPen8s3OmE9qMpZ5hwOhCNR1DVe1QsStJKUqiJ/lnWcMrNqg+iUsWGj8oy+z8rMB+LXwwOtCd/VvdXdmB8PlDEW1PygTXy31XBYY/KtvKVpvPmbyt8NjpGYAtGwrhUIxYwbZJJGiusXWN+6g7fd3PQeaoCEAl1Kx8=
     change-log: classpath:/changelog/db.changelog-master.xml
     enabled: true
     dropFirst: false
@@ -65,3 +74,11 @@ management:
         enabled: false
     system:
       enabled: false
+
+app:
+  grpc:
+    inventory-service:
+      #host: http://localhost #Use for connection outside docker
+      #host: http://dev-inventory-service #For connection inside docker, use container name or container IP address
+      host: http://173.20.1.7 #For connection inside docker, use container name or container IP address
+      port: 2002

@@ -7,7 +7,10 @@ services:
     restart: always
     container_name: prod-order-service
     networks:
-      - prod_order_ps_network
+      prod_order_ps_network:
+        ipv4_address: 173.21.1.9
+#    networks:
+#      - prod_order_ps_network
     ports:
       - "4003:4003"
 
