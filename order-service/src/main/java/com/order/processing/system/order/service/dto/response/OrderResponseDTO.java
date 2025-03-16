@@ -13,6 +13,7 @@ import java.io.Serializable;
 @NoArgsConstructor
 public class OrderResponseDTO implements Serializable {
     private String orderUuid;
+    private String userId;
     private String product;
     private Integer quantity;
     private String status;

@@ -35,6 +35,7 @@ public class Mapper {
                         Objects.isNull(order) ? null :
                                 OrderResponseDTO.builder()
                                         .orderUuid(order.getUuid())
+                                        .userId(order.getUserId())
                                         .product(order.getProduct())
                                         .quantity(order.getQuantity())
                                         .status(order.getStatus().label)
