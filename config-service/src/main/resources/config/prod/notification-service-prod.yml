@@ -24,7 +24,7 @@ spring:
     consumer:
       group-id: notification-group-id
     producer:
-      bootstrap-servers: http://${server.kafka-host}:19201
+      bootstrap-servers: http://${server.kafka-host}:9201
 
   mail:
     host: smtp.gmail.com

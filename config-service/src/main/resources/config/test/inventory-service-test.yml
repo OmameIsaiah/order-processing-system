@@ -22,7 +22,7 @@ spring:
     consumer:
       group-id: notification-group-id
     producer:
-      bootstrap-servers: http://${server.kafka-host}:19202
+      bootstrap-servers: http://${server.kafka-host}:9202
   datasource:
     hikari:
       minimum-idle: 5
@@ -31,7 +31,8 @@ spring:
       idle-timeout: 600000.0
       max-lifetime: 1800000
     driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://${server.db-host}:8803/neptune_test_store?createDatabaseIfNotExist=true&allowPublicKeyRetrieval=true&useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC&autoReconnect=true&useSSL=false&noAccessToProcedureBodies=true
+    #url: jdbc:mysql://${server.db-host}:8803/neptune_test_store?createDatabaseIfNotExist=true&allowPublicKeyRetrieval=true&useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC&autoReconnect=true&useSSL=false&noAccessToProcedureBodies=true
+    url: jdbc:mysql://${server.db-host}:3306/neptune_test_store?createDatabaseIfNotExist=true&allowPublicKeyRetrieval=true&useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC&autoReconnect=true&useSSL=false&noAccessToProcedureBodies=true
     username: "{cipher}AYBtlMAGu1JQUWOO9gppBe8G/Ml2BOh7jAOwCimI9ErlYGpef5Hg1y1NOyjn2CxMZ5i6tDOaKU1lKcaeH2yRuJilaZxSKBGNWZZAu+MuGR3nREdERALPRHblryPCa7B2XB1Ez6dINQIplYS1xjSa4UwrSHqrIKKtKlhQsoDTtUsR1YJsMKSCIDBtvRwAgNSrFsNQKT8wHg1JvrRc2kDn3eeX37+TtaZrpezF0PZUyi04NO62/fZnMvZtz0dE9/N0Td2Wk5AvlFG6kZGy3IEh03MwxFADCLq+PjLr8USOeASSFPi1AMZ21D+BNOzfOX1yai4Uf6m/vWRvHV29F7123DwckfPeLaHU5CmEnaU4ZmUXM0n4x3GnmdyLYiNWhwqZnOZZ0uaJRx9pXXrVx1VgqZrs3taQr4KdKaLC9vwWHoAecxJXzxBIv1+5h8PPp18CPrKU5mFEtJqntxyMgPuENu+IZDoUiNYqb7ZOiBfDxmucBZA1Naad9mhrCYdGjnGbjiYOeGbwSUPC/rgPqsSTNzBQKiSZgtEBwKK3OTTLsyNhWw=="
     password: "{cipher}AYDFtk4KZ7piFe7t8eISp/sS5FRc9F/W5wDkQNcOZEz54KSeRXiPqEou0OO4ZEahgi2BoxSV+zEGp2fRAggNDJ0BORUtG+IlFtKcWxMBwjXAIMWEt8WAWkqNTxtkYzq+bV8kZGomErzrPajxVWIL8eX8TjgNehhfoLmfB9bl99djrqcTGNgNjomQ8oXjfwYB80o5JtTrFcBX2DFXBua44v9/227N8P+f/2A0PSKzUNCNEqUudtCaR3R6G0f6GTuAEAsmxiZhdSj4PbPqjMPpnh6/j/Tg6vWZSoeLOO18l3Q5CHruTRPkGdPtOyddsRYxsix+ikCNUeL+pLKvTPraO/UqSRQ5W4n3rTWdsR/98EUgh2LsoSGJKP6yv69+Cysne7+Qn1giLl9gBXXVkA5KYeuht7JerjYuI6YP6Q74J753zCI88KvYWJYSjANLXQPWN0bOAmVYe/eGf5+KNZ77omhgN63HNsVdZC/1jnzilRQpoJmPhyHDNwpc6Zf8zCS+YjUzXi8WAwpx3vE3UHFMLNLKtCvXNdwCJh20LhXViaY923JrVSLVvuOdU6roWO94Z3g="
     jpa:
@@ -41,7 +42,8 @@ spring:
 
   liquibase:
     contexts: test
-    url: jdbc:mysql://${server.db-host}:8803/neptune_test_store?createDatabaseIfNotExist=true&allowPublicKeyRetrieval=true&useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC&autoReconnect=true&useSSL=false&noAccessToProcedureBodies=true
+    #url: jdbc:mysql://${server.db-host}:8803/neptune_test_store?createDatabaseIfNotExist=true&allowPublicKeyRetrieval=true&useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC&autoReconnect=true&useSSL=false&noAccessToProcedureBodies=true
+    url: jdbc:mysql://${server.db-host}:3306/neptune_test_store?createDatabaseIfNotExist=true&allowPublicKeyRetrieval=true&useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC&autoReconnect=true&useSSL=false&noAccessToProcedureBodies=true
     user: "{cipher}AYBtlMAGu1JQUWOO9gppBe8G/Ml2BOh7jAOwCimI9ErlYGpef5Hg1y1NOyjn2CxMZ5i6tDOaKU1lKcaeH2yRuJilaZxSKBGNWZZAu+MuGR3nREdERALPRHblryPCa7B2XB1Ez6dINQIplYS1xjSa4UwrSHqrIKKtKlhQsoDTtUsR1YJsMKSCIDBtvRwAgNSrFsNQKT8wHg1JvrRc2kDn3eeX37+TtaZrpezF0PZUyi04NO62/fZnMvZtz0dE9/N0Td2Wk5AvlFG6kZGy3IEh03MwxFADCLq+PjLr8USOeASSFPi1AMZ21D+BNOzfOX1yai4Uf6m/vWRvHV29F7123DwckfPeLaHU5CmEnaU4ZmUXM0n4x3GnmdyLYiNWhwqZnOZZ0uaJRx9pXXrVx1VgqZrs3taQr4KdKaLC9vwWHoAecxJXzxBIv1+5h8PPp18CPrKU5mFEtJqntxyMgPuENu+IZDoUiNYqb7ZOiBfDxmucBZA1Naad9mhrCYdGjnGbjiYOeGbwSUPC/rgPqsSTNzBQKiSZgtEBwKK3OTTLsyNhWw=="
     password: "{cipher}AYDFtk4KZ7piFe7t8eISp/sS5FRc9F/W5wDkQNcOZEz54KSeRXiPqEou0OO4ZEahgi2BoxSV+zEGp2fRAggNDJ0BORUtG+IlFtKcWxMBwjXAIMWEt8WAWkqNTxtkYzq+bV8kZGomErzrPajxVWIL8eX8TjgNehhfoLmfB9bl99djrqcTGNgNjomQ8oXjfwYB80o5JtTrFcBX2DFXBua44v9/227N8P+f/2A0PSKzUNCNEqUudtCaR3R6G0f6GTuAEAsmxiZhdSj4PbPqjMPpnh6/j/Tg6vWZSoeLOO18l3Q5CHruTRPkGdPtOyddsRYxsix+ikCNUeL+pLKvTPraO/UqSRQ5W4n3rTWdsR/98EUgh2LsoSGJKP6yv69+Cysne7+Qn1giLl9gBXXVkA5KYeuht7JerjYuI6YP6Q74J753zCI88KvYWJYSjANLXQPWN0bOAmVYe/eGf5+KNZ77omhgN63HNsVdZC/1jnzilRQpoJmPhyHDNwpc6Zf8zCS+YjUzXi8WAwpx3vE3UHFMLNLKtCvXNdwCJh20LhXViaY923JrVSLVvuOdU6roWO94Z3g="
     change-log: classpath:/changelog/db.changelog-master.xml
