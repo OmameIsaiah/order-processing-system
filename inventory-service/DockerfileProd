@@ -1,0 +1,33 @@
+# STAGE 1: Build the application
+FROM maven:3.8.4-openjdk-17-slim AS build
+
+#Working Directory for the API
+WORKDIR /app
+
+# Copy parent POM
+COPY . /app/order-processing-system
+
+WORKDIR /app/order-processing-system
+# Install parent POM first
+RUN mvn clean install -N
+
+# Move into the service directory
+WORKDIR /app/order-processing-system/inventory-service
+# Build the service
+RUN mvn clean install
+
+
+# STAGE 2: Create the Docker image
+#FROM openjdk:17-jdk-slim
+FROM eclipse-temurin:17-jre-alpine
+
+WORKDIR /app
+# Copy the built JAR file from the previous stage
+COPY --from=build /app/order-processing-system/inventory-service/target/inventory-service.jar ./inventory-service.jar
+
+# Expose the desired port(s)
+EXPOSE 4002
+
+# Define the command to run the application
+#ENTRYPOINT ["java", "-jar", "inventory-service.jar"]
+ENTRYPOINT ["java", "-XX:-UseContainerSupport", "-jar", "inventory-service.jar"]

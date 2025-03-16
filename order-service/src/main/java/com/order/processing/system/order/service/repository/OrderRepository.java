@@ -18,6 +18,9 @@ public interface OrderRepository extends JpaRepository<Order, Long> {
     @Query(nativeQuery = false, value = "SELECT o FROM Order o WHERE o.uuid=:uuid")
     Optional<Order> findOrderByUuid(@Param("uuid") String uuid);
 
+    @Query(nativeQuery = false, value = "SELECT o FROM Order o WHERE o.userId=:userId")
+    Page<Order> findOrderByUserId(@Param("userId") String userId, Pageable pageable);
+
     @Query(nativeQuery = false, value = "SELECT o FROM Order o")
     Page<Order> findAllOrders(Pageable pageable);
 

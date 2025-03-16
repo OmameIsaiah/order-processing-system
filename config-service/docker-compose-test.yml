@@ -1,0 +1,20 @@
+services:
+  test-config-service:
+    build:
+      context: ../
+      dockerfile: config-service/DockerfileTest
+    image: test-config-service:1.0
+    restart: always
+    container_name: test-config-service
+    networks:
+      test_order_ps_network:
+        ipv4_address: 173.22.1.5
+    #    networks:
+    #      - test_order_ps_network
+    ports:
+      - "3000:3000"
+
+networks:
+  test_order_ps_network:
+    external: true
+    driver: bridge

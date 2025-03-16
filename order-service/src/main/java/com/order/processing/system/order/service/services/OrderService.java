@@ -4,10 +4,12 @@ import com.order.processing.system.order.service.dto.request.CancelOrderRequestD
 import com.order.processing.system.order.service.dto.request.ConfirmOrderRequestDTO;
 import com.order.processing.system.order.service.dto.request.CreateOrderRequestDTO;
 import com.order.processing.system.order.service.dto.response.ApiResponse;
+import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.http.ResponseEntity;
 
 public interface OrderService {
-    ResponseEntity<ApiResponse> createOrder(CreateOrderRequestDTO createOrderRequestDTO);
+    ResponseEntity<ApiResponse> createOrder(CreateOrderRequestDTO createOrderRequestDTO,
+                                            HttpServletRequest httpServletRequest);
 
     ResponseEntity<ApiResponse> confirmOrder(ConfirmOrderRequestDTO confirmOrderRequestDTO);
 

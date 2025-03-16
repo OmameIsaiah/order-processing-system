@@ -6,17 +6,17 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.io.Serializable;
-import java.time.LocalDateTime;
 
 @Data
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
 public class OrderResponseDTO implements Serializable {
-    private String uuid;
+    private String orderUuid;
+    private String userId;
     private String product;
     private Integer quantity;
     private String status;
-    private LocalDateTime lastModified;
-    private LocalDateTime dateCreated;
+    private String lastModified;
+    private String dateCreated;
 }

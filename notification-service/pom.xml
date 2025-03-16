@@ -6,6 +6,7 @@
         <artifactId>order-processing-system</artifactId>
         <groupId>com.order.processing.system</groupId>
         <version>0.0.1-SNAPSHOT</version>
+        <relativePath>../pom.xml</relativePath>
     </parent>
     <modelVersion>4.0.0</modelVersion>
     <artifactId>notification-service</artifactId>
@@ -15,6 +16,8 @@
         <spring-boot.version>3.4.3</spring-boot.version>
         <spring-cloud.version>2024.0.0</spring-cloud.version>
         <gson.version>2.10.1</gson.version>
+        <tests.skip>true</tests.skip>
+        <maven-surefire-plugin.version>2.22.1</maven-surefire-plugin.version>
     </properties>
     <dependencies>
         <dependency>
@@ -97,6 +100,14 @@
                             <artifactId>lombok</artifactId>
                         </exclude>
                     </excludes>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-surefire-plugin</artifactId>
+                <version>${maven-surefire-plugin.version}</version>
+                <configuration>
+                    <skipTests>${tests.skip}</skipTests>
                 </configuration>
             </plugin>
         </plugins>

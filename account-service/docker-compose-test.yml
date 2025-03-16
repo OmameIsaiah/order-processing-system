@@ -1,0 +1,20 @@
+services:
+  test-account-service:
+    build:
+      context: ../
+      dockerfile: account-service/DockerfileTest
+    image: test-account-service:1.0
+    restart: always
+    container_name: test-account-service
+    networks:
+      test_order_ps_network:
+        ipv4_address: 173.22.1.6
+#    networks:
+#      - test_order_ps_network
+    ports:
+      - "3001:3001"
+
+networks:
+  test_order_ps_network:
+    external: true
+    driver: bridge

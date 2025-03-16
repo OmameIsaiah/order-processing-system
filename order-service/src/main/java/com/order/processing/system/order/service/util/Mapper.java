@@ -34,12 +34,13 @@ public class Mapper {
         return Optional.ofNullable(
                         Objects.isNull(order) ? null :
                                 OrderResponseDTO.builder()
-                                        .uuid(order.getUuid())
+                                        .orderUuid(order.getUuid())
+                                        .userId(order.getUserId())
                                         .product(order.getProduct())
                                         .quantity(order.getQuantity())
                                         .status(order.getStatus().label)
-                                        .dateCreated(order.getDateCreated())
-                                        .lastModified(order.getLastModified())
+                                        .dateCreated(order.getDateCreated().toString())
+                                        .lastModified(order.getLastModified().toString())
                                         .build())
                 .orElse(null);
     }

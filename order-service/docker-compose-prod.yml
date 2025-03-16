@@ -1,0 +1,20 @@
+services:
+  prod-order-service:
+    build:
+      context: ../
+      dockerfile: order-service/DockerfileProd
+    image: prod-order-service:1.0
+    restart: always
+    container_name: prod-order-service
+    networks:
+      prod_order_ps_network:
+        ipv4_address: 173.21.1.9
+#    networks:
+#      - prod_order_ps_network
+    ports:
+      - "4003:4003"
+
+networks:
+  prod_order_ps_network:
+    external: true
+    driver: bridge

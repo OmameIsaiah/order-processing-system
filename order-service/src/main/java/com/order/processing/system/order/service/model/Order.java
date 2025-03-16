@@ -33,6 +33,8 @@ public class Order implements Serializable {
     private Long id;
     @Column(name = "uuid")
     private String uuid = UUID.randomUUID().toString();
+    @Column(name = "user_id")
+    private String userId;
     @Column(name = "product", nullable = false)
     @NotEmpty(message = EMPTY_PRODUCT_NAME)
     @NotNull(message = NULL_PRODUCT_NAME)

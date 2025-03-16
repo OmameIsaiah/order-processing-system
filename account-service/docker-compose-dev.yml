@@ -1,0 +1,20 @@
+services:
+  dev-account-service:
+    build:
+      context: ../
+      dockerfile: account-service/DockerfileDev
+    image: dev-account-service:1.0
+    restart: always
+    container_name: dev-account-service
+    networks:
+      dev_order_ps_network:
+        ipv4_address: 173.20.1.6
+#    networks:
+#      - dev_order_ps_network
+    ports:
+      - "2001:2001"
+
+networks:
+  dev_order_ps_network:
+    external: true
+    driver: bridge

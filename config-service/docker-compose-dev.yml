@@ -1,0 +1,20 @@
+services:
+  dev-config-service:
+    build:
+      context: ../
+      dockerfile: config-service/DockerfileDev
+    image: dev-config-service:1.0
+    restart: always
+    container_name: dev-config-service
+    networks:
+      dev_order_ps_network:
+        ipv4_address: 173.20.1.5
+#    networks:
+#      - dev_order_ps_network
+    ports:
+      - "2000:2000"
+
+networks:
+  dev_order_ps_network:
+    external: true
+    driver: bridge

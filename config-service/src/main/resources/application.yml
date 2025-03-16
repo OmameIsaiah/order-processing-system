@@ -1,5 +1,5 @@
 server:
-  port: ${CONFIG_SERVICE_DEV_PORT:2000} #2000 for dev, 3000 for test and 400 for prod
+  port: ${CONFIG_SERVICE_DEV_PORT:2000} #2000 for dev, 3000 for test and 4000 for prod
 spring:
   profiles:
     active: native
@@ -19,3 +19,11 @@ encrypt:
     password: fJc0ADsc7N7DdCwE2zCWWqiOUyv8lyTBkHsHRUWa9pw
     secret: fJc0ADsc7N7DdCwE2zCWWqiOUyv8lyTBkHsHRUWa9pw
     type: jks
+
+management:
+  metrics:
+    export:
+      defaults:
+        enabled: false
+    system:
+      enabled: false

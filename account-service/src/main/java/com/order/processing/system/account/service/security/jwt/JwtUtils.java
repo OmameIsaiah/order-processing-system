@@ -48,6 +48,7 @@ public class JwtUtils {
         claims.put("user-type", userPrincipal.getUserType());
         claims.put("sub", userPrincipal.getUsername());
         claims.put("name", userPrincipal.getName());
+        claims.put("user-id", userPrincipal.getUserId());
         claims.put("email", userPrincipal.getUsername());
         claims.put("issuer", TOKEN_ISSUER);
         claims.put(ROLES_KEY, getPermissionsData(userPrincipal));

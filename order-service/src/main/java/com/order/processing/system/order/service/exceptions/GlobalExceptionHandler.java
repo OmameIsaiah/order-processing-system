@@ -50,6 +50,14 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
         return ResponseEntity.status(HttpStatus.CONFLICT).body(new ApiResponse<>(false, HttpStatus.CONFLICT.value(), HttpStatus.CONFLICT, exception.getMessage()));
     }
 
+    @ExceptionHandler(AccessDeniedException.class)
+    public ResponseEntity handleAccessDeniedException(AccessDeniedException exception, WebRequest webRequest) {
+        String requestUrl = webRequest.getContextPath();
+        log.warn("{} access through {}", exception.getMessage(), requestUrl);
+        //exception.printStackTrace();
+        return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(new ApiResponse<>(false, HttpStatus.UNAUTHORIZED.value(), HttpStatus.UNAUTHORIZED, exception.getMessage()));
+    }
+
     @ExceptionHandler(IllegalArgumentException.class)
     public ResponseEntity handleIllegalArgumentExceptions(BadRequestException exception, WebRequest webRequest) {
         String requestUrl = webRequest.getContextPath();

@@ -1,0 +1,20 @@
+services:
+  prod-account-service:
+    build:
+      context: ../
+      dockerfile: account-service/DockerfileProd
+    image: prod-account-service:1.0
+    restart: always
+    container_name: prod-account-service
+    networks:
+      prod_order_ps_network:
+        ipv4_address: 173.21.1.6
+#    networks:
+#      - prod_order_ps_network
+    ports:
+      - "4001:4001"
+
+networks:
+  prod_order_ps_network:
+    external: true
+    driver: bridge
