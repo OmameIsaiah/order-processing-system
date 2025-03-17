@@ -1,5 +1,5 @@
 server:
-  port: ${CONFIG_SERVICE_DEV_PORT:2000} #2000 for dev, 3000 for test and 4000 for prod
+  port: ${CONFIG_SERVICE_DEV_PORT:4000} #2000 for dev, 3000 for test and 4000 for prod
 spring:
   profiles:
     active: native

@@ -111,26 +111,26 @@ This script will build and deploy the API as a container in Docker. The applicat
 ### Swagger Endpoint Access
 There are two major services that are open for frontend consumption: 
 * Account Service (Signup, login, email verification, etc.)
-  1. Base URL: http://localhost:2001/account-service/
-  2. Swagger UI: http://localhost:2001/account-service/swagger-ui/index.html
+  1. Base URL: http://localhost:4001/account-service/
+  2. Swagger UI: http://localhost:4001/account-service/swagger-ui/index.html
 
 * Order Service (Product & Order Management)
-  1. Base URL: http://localhost:2003/order-service/
-  2. Swagger UI: http://localhost:2003/order-service/swagger-ui/index.html
+  1. Base URL: http://localhost:4003/order-service/
+  2. Swagger UI: http://localhost:4003/order-service/swagger-ui/index.html
 
 
 ### Access the Database
 
 To connect to the MySQL database, use the following credentials:
 ```
-mysql -u root -h localhost -P 8801 -p
+mysql -u root -h localhost -P 8802 -p
 ```
 Users:
 
 | Username | Password           |
 |----------|--------------------|
-| root     | dev@OrderPS_2025   | 
-| docker   | dev@OrderPS_2025   | 
+| root     | prod@OrderPS_2025  | 
+| docker   | prod@OrderPS_2025  | 
 
 
 
