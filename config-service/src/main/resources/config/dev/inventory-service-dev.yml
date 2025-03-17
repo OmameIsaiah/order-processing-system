@@ -22,7 +22,7 @@ spring:
     consumer:
       group-id: notification-group-id
     producer:
-      bootstrap-servers: http://${server.kafka-host}:9206
+      bootstrap-servers: ${server.kafka-host}:9206
   datasource:
     hikari:
       minimum-idle: 5
