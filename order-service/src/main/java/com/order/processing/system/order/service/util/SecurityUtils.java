@@ -42,4 +42,8 @@ public class SecurityUtils {
     public static String getUseridFromRequestHeader(HttpServletRequest httpServletRequest) {
         return getUserIdFromJwtToken(getTokenFromRequestHeader(httpServletRequest));
     }
+
+    public static String validateBearerToken(HttpServletRequest httpServletRequest) {
+        return getUserIdFromJwtToken(getTokenFromRequestHeader(httpServletRequest));
+    }
 }

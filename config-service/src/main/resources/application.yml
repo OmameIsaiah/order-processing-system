@@ -27,3 +27,12 @@ management:
         enabled: false
     system:
       enabled: false
+
+
+#Endpoint for encrypting value: [POST] http://localhost:2000/encrypt
+#Endpoint for decrypting values: [POST] http://localhost:2000/decrypt
+#Endpoint for reading property file values for specific service:
+#http://localhost:2000/account-service/dev
+#http://localhost:2000/inventory-service/dev
+#http://localhost:2000/nofitication-service/dev
+#http://localhost:2000/order-service/dev

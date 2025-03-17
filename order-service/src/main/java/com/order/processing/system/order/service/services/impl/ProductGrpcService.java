@@ -3,8 +3,10 @@ package com.order.processing.system.order.service.services.impl;
 import com.order.processing.system.order.service.dto.request.AddProductRequestDTO;
 import com.order.processing.system.order.service.dto.request.UpdateProductRequestDTO;
 import com.order.processing.system.order.service.dto.request.UpdateProductStockRequestDTO;
+import com.order.processing.system.order.service.util.SecurityUtils;
 import com.order.processing.system.proto.*;
 import io.grpc.StatusRuntimeException;
+import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
@@ -22,7 +24,9 @@ import static com.order.processing.system.order.service.util.AppMessages.PRODUCT
 public class ProductGrpcService {
     private final ProductServiceGrpc.ProductServiceBlockingStub productServiceBlockingStub;
 
-    public ResponseEntity<ApiResponse> addProduct(AddProductRequestDTO requestDTO) {
+    public ResponseEntity<ApiResponse> addProduct(AddProductRequestDTO requestDTO,
+                                                  HttpServletRequest httpServletRequest) {
+        SecurityUtils.validateBearerToken(httpServletRequest);
         AddProductRequest request = AddProductRequest.newBuilder()
                 .setName(requestDTO.getName())
                 .setQuantity(requestDTO.getQuantity())
@@ -39,7 +43,9 @@ public class ProductGrpcService {
         }
     }
 
-    public ResponseEntity<ApiResponse> updateProduct(UpdateProductRequestDTO requestDTO) {
+    public ResponseEntity<ApiResponse> updateProduct(UpdateProductRequestDTO requestDTO,
+                                                     HttpServletRequest httpServletRequest) {
+        SecurityUtils.validateBearerToken(httpServletRequest);
         UpdateProductRequest request = UpdateProductRequest.newBuilder()
                 .setProductUuid(requestDTO.getProductUuid())
                 .setName(requestDTO.getName())
@@ -55,6 +61,12 @@ public class ProductGrpcService {
         } catch (StatusRuntimeException e) {
             return processBadRequestResponse(e);
         }
+    }
+
+    public ResponseEntity<ApiResponse> updateStockAvailabilityEndpoint(UpdateProductStockRequestDTO requestDTO,
+                                                                       HttpServletRequest httpServletRequest) {
+        SecurityUtils.validateBearerToken(httpServletRequest);
+        return updateStockAvailability(requestDTO);
     }
 
     public ResponseEntity<ApiResponse> updateStockAvailability(UpdateProductStockRequestDTO requestDTO) {
@@ -73,7 +85,9 @@ public class ProductGrpcService {
         }
     }
 
-    public ResponseEntity<ApiResponse> checkStockAvailability(String productUuid) {
+    public ResponseEntity<ApiResponse> checkStockAvailability(String productUuid,
+                                                              HttpServletRequest httpServletRequest) {
+        SecurityUtils.validateBearerToken(httpServletRequest);
         CheckStockRequest request = CheckStockRequest.newBuilder()
                 .setProductUuid(productUuid)
                 .build();
@@ -104,7 +118,9 @@ public class ProductGrpcService {
         }
     }
 
-    public ResponseEntity<ApiResponse> getProductById(String productUuid) {
+    public ResponseEntity<ApiResponse> getProductById(String productUuid,
+                                                      HttpServletRequest httpServletRequest) {
+        SecurityUtils.validateBearerToken(httpServletRequest);
         CheckStockRequest request = CheckStockRequest.newBuilder()
                 .setProductUuid(productUuid)
                 .build();
@@ -119,7 +135,9 @@ public class ProductGrpcService {
         }
     }
 
-    public ResponseEntity<ApiResponse> viewAllProducts(Integer page, Integer size) {
+    public ResponseEntity<ApiResponse> viewAllProducts(Integer page, Integer size,
+                                                       HttpServletRequest httpServletRequest) {
+        SecurityUtils.validateBearerToken(httpServletRequest);
         ViewAllProductsRequest request = ViewAllProductsRequest.newBuilder()
                 .setPage(page)
                 .setSize(size)
@@ -135,7 +153,9 @@ public class ProductGrpcService {
         }
     }
 
-    public ResponseEntity<ApiResponse> deleteProduct(String productUuid) {
+    public ResponseEntity<ApiResponse> deleteProduct(String productUuid,
+                                                     HttpServletRequest httpServletRequest) {
+        SecurityUtils.validateBearerToken(httpServletRequest);
         DeleteProductRequest request = DeleteProductRequest.newBuilder()
                 .setProductUuid(productUuid)
                 .build();

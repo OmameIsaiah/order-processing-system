@@ -61,5 +61,3 @@ management:
     system:
       enabled: false
 
-#Endpoint for encrypting value: [POST] http://localhost:2000/encrypt
-#Endpoint for decrypting values: [POST] http://localhost:2000/decrypt

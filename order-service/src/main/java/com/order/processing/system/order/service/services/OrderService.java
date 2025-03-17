@@ -11,15 +11,21 @@ public interface OrderService {
     ResponseEntity<ApiResponse> createOrder(CreateOrderRequestDTO createOrderRequestDTO,
                                             HttpServletRequest httpServletRequest);
 
-    ResponseEntity<ApiResponse> confirmOrder(ConfirmOrderRequestDTO confirmOrderRequestDTO);
+    ResponseEntity<ApiResponse> confirmOrder(ConfirmOrderRequestDTO confirmOrderRequestDTO,
+                                             HttpServletRequest httpServletRequest);
 
-    ResponseEntity<ApiResponse> cancelOrder(CancelOrderRequestDTO cancelOrderRequestDTO);
+    ResponseEntity<ApiResponse> cancelOrder(CancelOrderRequestDTO cancelOrderRequestDTO,
+                                            HttpServletRequest httpServletRequest);
 
-    ResponseEntity<ApiResponse> viewOrderById(String orderUuid);
+    ResponseEntity<ApiResponse> viewOrderById(String orderUuid,
+                                              HttpServletRequest httpServletRequest);
 
-    ResponseEntity<ApiResponse> viewAllOrders(Integer page, Integer size);
+    ResponseEntity<ApiResponse> viewAllOrders(Integer page, Integer size,
+                                              HttpServletRequest httpServletRequest);
 
-    ResponseEntity<ApiResponse> viewUsersOrders(String userId, Integer page, Integer size);
+    ResponseEntity<ApiResponse> viewUsersOrders(String userId, Integer page, Integer size,
+                                                HttpServletRequest httpServletRequest);
 
-    ResponseEntity<ApiResponse> deleteOrder(String orderUuid);
+    ResponseEntity<ApiResponse> deleteOrder(String orderUuid,
+                                            HttpServletRequest httpServletRequest);
 }
