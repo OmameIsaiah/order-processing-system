@@ -104,7 +104,9 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
-    public ResponseEntity<ApiResponse> confirmOrder(ConfirmOrderRequestDTO confirmOrderRequestDTO) {
+    public ResponseEntity<ApiResponse> confirmOrder(ConfirmOrderRequestDTO confirmOrderRequestDTO,
+                                                    HttpServletRequest httpServletRequest) {
+        SecurityUtils.validateBearerToken(httpServletRequest);
         Optional<Order> optional = validateOrderUuid(confirmOrderRequestDTO.getOrderUuid());
         Order order = optional.get();
         order.setStatus(OrderStatus.SUCCESS);
@@ -120,7 +122,9 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
-    public ResponseEntity<ApiResponse> cancelOrder(CancelOrderRequestDTO cancelOrderRequestDTO) {
+    public ResponseEntity<ApiResponse> cancelOrder(CancelOrderRequestDTO cancelOrderRequestDTO,
+                                                   HttpServletRequest httpServletRequest) {
+        SecurityUtils.validateBearerToken(httpServletRequest);
         Optional<Order> optional = validateOrderUuid(cancelOrderRequestDTO.getOrderUuid());
         Order order = optional.get();
         if (OrderStatus.SUCCESS.equals(order.getStatus())) {
@@ -173,7 +177,9 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
-    public ResponseEntity<ApiResponse> viewOrderById(String orderUuid) {
+    public ResponseEntity<ApiResponse> viewOrderById(String orderUuid,
+                                                     HttpServletRequest httpServletRequest) {
+        SecurityUtils.validateBearerToken(httpServletRequest);
         Optional<Order> optional = validateOrderUuid(orderUuid);
         Order order = optional.get();
         return ResponseEntity.status(HttpStatus.OK).body(
@@ -186,7 +192,9 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
-    public ResponseEntity<ApiResponse> viewAllOrders(Integer page, Integer size) {
+    public ResponseEntity<ApiResponse> viewAllOrders(Integer page, Integer size,
+                                                     HttpServletRequest httpServletRequest) {
+        SecurityUtils.validateBearerToken(httpServletRequest);
         Sort orders = Sort.by("dateCreated").descending();
         Page<Order> list = orderRepository.findAllOrders(PageRequest.of((Objects.isNull(page) ? 0 : page), (Objects.isNull(size) ? 50 : size), orders));
         if (list.isEmpty() || Objects.isNull(list)) {
@@ -196,7 +204,9 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
-    public ResponseEntity<ApiResponse> viewUsersOrders(String userId, Integer page, Integer size) {
+    public ResponseEntity<ApiResponse> viewUsersOrders(String userId, Integer page, Integer size,
+                                                       HttpServletRequest httpServletRequest) {
+        SecurityUtils.validateBearerToken(httpServletRequest);
         if (Objects.isNull(userId)) {
             throw new BadRequestException(NULL_USER_UUID);
         }
@@ -211,7 +221,9 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
-    public ResponseEntity<ApiResponse> deleteOrder(String orderUuid) {
+    public ResponseEntity<ApiResponse> deleteOrder(String orderUuid,
+                                                   HttpServletRequest httpServletRequest) {
+        SecurityUtils.validateBearerToken(httpServletRequest);
         Optional<Order> optional = validateOrderUuid(orderUuid);
         if (OrderStatus.PENDING.equals(optional.get().getStatus())) {
             throw new BadRequestException(PENDING_ORDER_CANNOT_BE_DELETED);

@@ -24,7 +24,7 @@ spring:
     consumer:
       group-id: notification-group-id
     producer:
-      bootstrap-servers: http://${server.kafka-host}:19201
+      bootstrap-servers: ${server.kafka-host}:9201
   datasource:
     hikari:
       minimum-idle: 5
@@ -33,7 +33,8 @@ spring:
       idle-timeout: 600000.0
       max-lifetime: 1800000
     driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://${server.db-host}:8802/neptune_dev_store?createDatabaseIfNotExist=true&allowPublicKeyRetrieval=true&useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC&autoReconnect=true&useSSL=false&noAccessToProcedureBodies=true
+    #url: jdbc:mysql://${server.db-host}:8802/neptune_dev_store?createDatabaseIfNotExist=true&allowPublicKeyRetrieval=true&useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC&autoReconnect=true&useSSL=false&noAccessToProcedureBodies=true
+    url: jdbc:mysql://${server.db-host}:3306/neptune_dev_store?createDatabaseIfNotExist=true&allowPublicKeyRetrieval=true&useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC&autoReconnect=true&useSSL=false&noAccessToProcedureBodies=true
     username: "{cipher}AYBtlMAGu1JQUWOO9gppBe8G/Ml2BOh7jAOwCimI9ErlYGpef5Hg1y1NOyjn2CxMZ5i6tDOaKU1lKcaeH2yRuJilaZxSKBGNWZZAu+MuGR3nREdERALPRHblryPCa7B2XB1Ez6dINQIplYS1xjSa4UwrSHqrIKKtKlhQsoDTtUsR1YJsMKSCIDBtvRwAgNSrFsNQKT8wHg1JvrRc2kDn3eeX37+TtaZrpezF0PZUyi04NO62/fZnMvZtz0dE9/N0Td2Wk5AvlFG6kZGy3IEh03MwxFADCLq+PjLr8USOeASSFPi1AMZ21D+BNOzfOX1yai4Uf6m/vWRvHV29F7123DwckfPeLaHU5CmEnaU4ZmUXM0n4x3GnmdyLYiNWhwqZnOZZ0uaJRx9pXXrVx1VgqZrs3taQr4KdKaLC9vwWHoAecxJXzxBIv1+5h8PPp18CPrKU5mFEtJqntxyMgPuENu+IZDoUiNYqb7ZOiBfDxmucBZA1Naad9mhrCYdGjnGbjiYOeGbwSUPC/rgPqsSTNzBQKiSZgtEBwKK3OTTLsyNhWw=="
     password: "{cipher}AYAahUxN97+cEjJoBwycPFjLDijGHgnJ/jIg4gHBF3CqXSDvw2IXCj6XkjtzFDrdB/hzamdbvRM49X8TgebLXsq3w/aJpGrpCEO2m7KblOF9wP4wCbDR6Nr2HsOH288ctggPwAymf9eGE3q2glfDyWbaMOjrEwV5ytaE9aiQ53sMKbWTcAEsT3kWjXUcSYfRDXQPBBFxjwINsjRnSSc8kfbX3YSSU42wR362tMXHMrUqQwnBH5z9/ZmS1tUyWyLEuTQzi3gzswEaN7OUW8qDoChDxSPWY/atshXqtOokP9RQLruNYLEaF5kff01cxKQGHDz+oSWn2mj0wbk1bcUZ4p9Ty6jNFGfCFsd4JhRkMUzuneCgQxsf/fRjkhZCt76m4LvK2wguzUwE2FLRRwedGP9d2HaNMx0D7FaYJBRksyWcUlkjsntDYlgXw/WUDrcEoK151uHw1xmemL8jj0Jaiglr79l1jidq1TYXFIGVKDYdXOfWSUpE/l+NPIX4jFAv7s5p6ptQYy764OzhrqPrn4uXWno8jfMWYOJLw88/4Es5kmZSezLyrPQGeUZKhSqZTZk="
     jpa:
@@ -43,7 +44,8 @@ spring:
 
   liquibase:
     contexts: prod
-    url: jdbc:mysql://${server.db-host}:8802/neptune_dev_store?createDatabaseIfNotExist=true&allowPublicKeyRetrieval=true&useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC&autoReconnect=true&useSSL=false&noAccessToProcedureBodies=true
+    #url: jdbc:mysql://${server.db-host}:8802/neptune_dev_store?createDatabaseIfNotExist=true&allowPublicKeyRetrieval=true&useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC&autoReconnect=true&useSSL=false&noAccessToProcedureBodies=true
+    url: jdbc:mysql://${server.db-host}:3306/neptune_dev_store?createDatabaseIfNotExist=true&allowPublicKeyRetrieval=true&useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC&autoReconnect=true&useSSL=false&noAccessToProcedureBodies=true
     user: "{cipher}AYBtlMAGu1JQUWOO9gppBe8G/Ml2BOh7jAOwCimI9ErlYGpef5Hg1y1NOyjn2CxMZ5i6tDOaKU1lKcaeH2yRuJilaZxSKBGNWZZAu+MuGR3nREdERALPRHblryPCa7B2XB1Ez6dINQIplYS1xjSa4UwrSHqrIKKtKlhQsoDTtUsR1YJsMKSCIDBtvRwAgNSrFsNQKT8wHg1JvrRc2kDn3eeX37+TtaZrpezF0PZUyi04NO62/fZnMvZtz0dE9/N0Td2Wk5AvlFG6kZGy3IEh03MwxFADCLq+PjLr8USOeASSFPi1AMZ21D+BNOzfOX1yai4Uf6m/vWRvHV29F7123DwckfPeLaHU5CmEnaU4ZmUXM0n4x3GnmdyLYiNWhwqZnOZZ0uaJRx9pXXrVx1VgqZrs3taQr4KdKaLC9vwWHoAecxJXzxBIv1+5h8PPp18CPrKU5mFEtJqntxyMgPuENu+IZDoUiNYqb7ZOiBfDxmucBZA1Naad9mhrCYdGjnGbjiYOeGbwSUPC/rgPqsSTNzBQKiSZgtEBwKK3OTTLsyNhWw=="
     password: "{cipher}AYAahUxN97+cEjJoBwycPFjLDijGHgnJ/jIg4gHBF3CqXSDvw2IXCj6XkjtzFDrdB/hzamdbvRM49X8TgebLXsq3w/aJpGrpCEO2m7KblOF9wP4wCbDR6Nr2HsOH288ctggPwAymf9eGE3q2glfDyWbaMOjrEwV5ytaE9aiQ53sMKbWTcAEsT3kWjXUcSYfRDXQPBBFxjwINsjRnSSc8kfbX3YSSU42wR362tMXHMrUqQwnBH5z9/ZmS1tUyWyLEuTQzi3gzswEaN7OUW8qDoChDxSPWY/atshXqtOokP9RQLruNYLEaF5kff01cxKQGHDz+oSWn2mj0wbk1bcUZ4p9Ty6jNFGfCFsd4JhRkMUzuneCgQxsf/fRjkhZCt76m4LvK2wguzUwE2FLRRwedGP9d2HaNMx0D7FaYJBRksyWcUlkjsntDYlgXw/WUDrcEoK151uHw1xmemL8jj0Jaiglr79l1jidq1TYXFIGVKDYdXOfWSUpE/l+NPIX4jFAv7s5p6ptQYy764OzhrqPrn4uXWno8jfMWYOJLw88/4Es5kmZSezLyrPQGeUZKhSqZTZk="
     change-log: classpath:/changelog/db.changelog-master.xml
@@ -78,9 +80,9 @@ management:
 app:
   grpc:
     inventory-service:
-      #host: http://localhost #Use for connection outside docker
+      #host: localhost #Use for connection outside docker
       #host: http://prod-inventory-service #For connection inside docker, use container name or container IP address
-      host: http://173.21.1.7 #For connection inside docker, use container name or container IP address
+      host: 173.21.1.7 #For connection inside docker, use container name or container IP address
       port: 4002
   jwt:
     signing:

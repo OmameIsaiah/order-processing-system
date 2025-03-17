@@ -4,7 +4,6 @@ import com.order.processing.system.order.service.exceptions.AccessDeniedExceptio
 import io.jsonwebtoken.Jwts;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 import org.springframework.util.StringUtils;
 
@@ -17,8 +16,7 @@ import static com.order.processing.system.order.service.util.AppMessages.INVALID
 @Slf4j
 public class SecurityUtils {
     private static String userId = "user-id";
-    @Value("${app.jwt.signing.key:20725b85bb97d75a04c275a18f5f1d873c4b7b4cd9b73042508082f968488f94}")
-    private static String JWT_SECRET;
+    private static String JWT_SECRET = "20725b85bb97d75a04c275a18f5f1d873c4b7b4cd9b73042508082f968488f94";
 
     public static String getUserIdFromJwtToken(String token) {
         try {
@@ -28,6 +26,7 @@ public class SecurityUtils {
             }
             return null;
         } catch (Exception e) {
+            e.printStackTrace();
             throw new AccessDeniedException(INVALID_ACCESS_TOKEN);
         }
     }
@@ -41,6 +40,10 @@ public class SecurityUtils {
     }
 
     public static String getUseridFromRequestHeader(HttpServletRequest httpServletRequest) {
+        return getUserIdFromJwtToken(getTokenFromRequestHeader(httpServletRequest));
+    }
+
+    public static String validateBearerToken(HttpServletRequest httpServletRequest) {
         return getUserIdFromJwtToken(getTokenFromRequestHeader(httpServletRequest));
     }
 }

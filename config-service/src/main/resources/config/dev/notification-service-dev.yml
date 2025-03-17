@@ -24,7 +24,7 @@ spring:
     consumer:
       group-id: notification-group-id
     producer:
-      bootstrap-servers: http://${server.kafka-host}:19206
+      bootstrap-servers: ${server.kafka-host}:9206
 
   mail:
     host: smtp.gmail.com
@@ -60,6 +60,3 @@ management:
         enabled: false
     system:
       enabled: false
-
-#Endpoint for encrypting value: [POST] http://localhost:2000/encrypt
-#Endpoint for decrypting values: [POST] http://localhost:2000/decrypt

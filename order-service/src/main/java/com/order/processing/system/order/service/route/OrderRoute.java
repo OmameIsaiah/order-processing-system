@@ -36,24 +36,27 @@ public class OrderRoute {
     @Operation(
             summary = "Endpoint for confirming an order",
             description = "Endpoint for confirming an order")
-    public ResponseEntity<ApiResponse> confirmOrder(@RequestBody @Valid ConfirmOrderRequestDTO payload) {
-        return orderService.confirmOrder(payload);
+    public ResponseEntity<ApiResponse> confirmOrder(@RequestBody @Valid ConfirmOrderRequestDTO payload,
+                                                    HttpServletRequest httpServletRequest) {
+        return orderService.confirmOrder(payload, httpServletRequest);
     }
 
     @PostMapping(value = CANCEL_ORDER, produces = MediaType.APPLICATION_JSON_VALUE)
     @Operation(
             summary = "Endpoint for canceling an order",
             description = "Endpoint for canceling an order")
-    public ResponseEntity<ApiResponse> cancelOrder(@RequestBody @Valid CancelOrderRequestDTO payload) {
-        return orderService.cancelOrder(payload);
+    public ResponseEntity<ApiResponse> cancelOrder(@RequestBody @Valid CancelOrderRequestDTO payload,
+                                                   HttpServletRequest httpServletRequest) {
+        return orderService.cancelOrder(payload, httpServletRequest);
     }
 
     @GetMapping(value = VIEW_ORDER_BY_ID, produces = MediaType.APPLICATION_JSON_VALUE)
     @Operation(
             summary = "Endpoint for view order by id",
             description = "Endpoint for view order by id")
-    public ResponseEntity<ApiResponse> viewOrderById(@RequestParam("orderUuid") String orderUuid) {
-        return orderService.viewOrderById(orderUuid);
+    public ResponseEntity<ApiResponse> viewOrderById(@RequestParam("orderUuid") String orderUuid,
+                                                     HttpServletRequest httpServletRequest) {
+        return orderService.viewOrderById(orderUuid, httpServletRequest);
     }
 
     @GetMapping(value = VIEW_USERS_ORDERS, produces = MediaType.APPLICATION_JSON_VALUE)
@@ -63,8 +66,9 @@ public class OrderRoute {
     public ResponseEntity<ApiResponse> viewUsersOrders(
             @RequestParam(value = "userId", required = true) String userId,
             @RequestParam(value = "page", defaultValue = "0") Integer page,
-            @RequestParam(value = "size", defaultValue = "50") Integer size) {
-        return orderService.viewUsersOrders(userId, page, size);
+            @RequestParam(value = "size", defaultValue = "50") Integer size,
+            HttpServletRequest httpServletRequest) {
+        return orderService.viewUsersOrders(userId, page, size, httpServletRequest);
     }
 
     @GetMapping(value = VIEW_ALL_ORDERS, produces = MediaType.APPLICATION_JSON_VALUE)
@@ -73,15 +77,17 @@ public class OrderRoute {
             description = "Endpoint for viewing all orders")
     public ResponseEntity<ApiResponse> viewAllOrders(
             @RequestParam(value = "page", defaultValue = "0") Integer page,
-            @RequestParam(value = "size", defaultValue = "50") Integer size) {
-        return orderService.viewAllOrders(page, size);
+            @RequestParam(value = "size", defaultValue = "50") Integer size,
+            HttpServletRequest httpServletRequest) {
+        return orderService.viewAllOrders(page, size, httpServletRequest);
     }
 
     @DeleteMapping(value = DELETE_ORDER, produces = MediaType.APPLICATION_JSON_VALUE)
     @Operation(
             summary = "Endpoint for deleting an order",
             description = "Endpoint for deleting an order")
-    public ResponseEntity<ApiResponse> deleteOrder(@RequestParam("orderUuid") String orderUuid) {
-        return orderService.deleteOrder(orderUuid);
+    public ResponseEntity<ApiResponse> deleteOrder(@RequestParam("orderUuid") String orderUuid,
+                                                   HttpServletRequest httpServletRequest) {
+        return orderService.deleteOrder(orderUuid, httpServletRequest);
     }
 }
