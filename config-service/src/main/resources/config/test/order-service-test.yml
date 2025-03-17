@@ -80,9 +80,9 @@ management:
 app:
   grpc:
     inventory-service:
-      #host: http://localhost #Use for connection outside docker
-      #host: http://test-inventory-service #For connection inside docker, use container name or container IP address
-      host: http://173.22.1.7 #For connection inside docker, use container name or container IP address
+      #host: localhost #Use for connection outside docker
+      #host: test-inventory-service #For connection inside docker, use container name or container IP address
+      host: 173.22.1.7 #For connection inside docker, use container name or container IP address
       port: 3002
   jwt:
     signing:
