@@ -13,6 +13,10 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.oauth2.server.resource.web.BearerTokenAuthenticationEntryPoint;
 import org.springframework.security.oauth2.server.resource.web.access.BearerTokenAccessDeniedHandler;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.web.cors.CorsConfiguration;
+import org.springframework.web.cors.CorsConfigurationSource;
+import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
+import org.springframework.web.filter.CorsFilter;
 
 import static com.order.processing.system.account.service.enums.Permissions.*;
 
@@ -21,10 +25,28 @@ import static com.order.processing.system.account.service.enums.Permissions.*;
 @EnableMethodSecurity(securedEnabled = true)
 @RequiredArgsConstructor
 public class SecurityConfiguration {
+    private final CorsProperties corsProperties;
 
     @Bean
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
+    }
+
+    @Bean
+    public CorsConfigurationSource corsConfigurationSource() {
+        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+        CorsConfiguration corsConfig = new CorsConfiguration();
+        corsConfig.setAllowedOrigins(corsProperties.getOrigins());
+        corsConfig.setAllowedMethods(corsProperties.getMethods());
+        corsConfig.setAllowedHeaders(corsProperties.getHeaders());
+        corsConfig.setAllowCredentials(true);
+        source.registerCorsConfiguration("/**", corsConfig);
+        return source;
+    }
+
+    @Bean
+    public CorsFilter corsFilter() {
+        return new CorsFilter(corsConfigurationSource());
     }
 
     private static final String[] AUTH_WHITELIST = {
@@ -53,7 +75,8 @@ public class SecurityConfiguration {
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
-        http
+        http.
+                cors(cors -> cors.configurationSource(corsConfigurationSource())) // Enable CORS
                 .csrf(csrf -> csrf.disable())
                 .authorizeHttpRequests(authz ->
                         authz
