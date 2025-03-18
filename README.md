@@ -90,20 +90,14 @@ For Windows
 
 ```
 run-dev.bat
-# or
-run-prod.bat
-# or
-run-test.bat
+
 ```
 
 For Linux/macOS
 
 ```
 ./run-dev.sh
-# or
-./run-prod.sh
-# or
-./run-test.sh
+
 ```
 
 This script will build and deploy the API as a container in Docker. The application should be ready in a few minutes.
@@ -136,7 +130,7 @@ Users:
 
 ## Endpoints
 
-he API includes endpoints for user authentication, product management, order management, and role-based access control.
+The API includes endpoints for user authentication, product management, order management, and role-based access control.
 
 > ⚠️ After creating a new account, an OTP is sent to the registered email for verification and account activation.
 > Without verifying the email via OTP, the user will not have access to the account.
