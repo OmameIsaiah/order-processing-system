@@ -23,7 +23,7 @@ public interface UserRepository extends JpaRepository<Users, Long> {
     @Query(nativeQuery = false, value = "SELECT u FROM Users u WHERE u.email=:email")
     Optional<Users> findUserByEmail(@Param("email") String email);
 
-    @Query(nativeQuery = false, value = "SELECT u FROM Users u WHERE u.email LIKE %:keyword% OR u.name  LIKE %:keyword%  OR u.userType LIKE %:keyword%")
+    @Query(nativeQuery = false, value = "SELECT u FROM Users u WHERE u.email LIKE %:keyword% OR u.name  LIKE %:keyword% ")
     List<Users> searchUsers(@Param("keyword") String keyword);
 
     @Query(nativeQuery = false, value = "SELECT u FROM Users u WHERE u.userType=:userType")
