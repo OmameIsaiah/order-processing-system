@@ -1,9 +1,9 @@
 package com.order.processing.system.account.service.model;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.order.processing.system.account.service.enums.Permissions;
 import com.order.processing.system.account.service.model.converters.PermissionsConverter;
-import com.vladmihalcea.hibernate.type.json.JsonBinaryType;
 import com.vladmihalcea.hibernate.type.json.JsonStringType;
 import jakarta.persistence.*;
 import jakarta.persistence.CascadeType;
@@ -43,8 +43,10 @@ public class Role implements Serializable {
     private String name;
     @Column(name = "description")
     private String description;
-    @Column(name = "permissions", columnDefinition = "jsonb", nullable = false, updatable = true)
-    @Type(JsonBinaryType.class)
+    @JsonSerialize
+    @JsonDeserialize
+    @Type(JsonStringType.class)
+    @Column(name = "permissions", columnDefinition = "JSON", nullable = false, updatable = true)
     //@JdbcTypeCode(SqlTypes.JSON)
     //@Convert(converter = PermissionsConverter.class)
     private Set<Permissions> permissions;

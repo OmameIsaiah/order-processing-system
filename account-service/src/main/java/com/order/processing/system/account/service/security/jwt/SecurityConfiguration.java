@@ -82,13 +82,15 @@ public class SecurityConfiguration {
                         authz
                                 .requestMatchers(AUTH_WHITELIST).permitAll()
                                 .requestMatchers(HttpMethod.OPTIONS, "/**").permitAll()
+                                .requestMatchers("/api/v1/users/management/**").permitAll()
+                                .requestMatchers("/api/v1/roles/**").permitAll()
                                 //.requestMatchers("/api/v1/users/management/find-all").hasAnyAuthority(CAN_VIEW_USERS.name(), CAN_DELETE_USER.name())
-                                .requestMatchers("/api/v1/users/management/find-all").hasAnyRole(CAN_VIEW_USERS.name(), CAN_DELETE_USER.name())
+                                /*.requestMatchers("/api/v1/users/management/find-all").hasAnyRole(CAN_VIEW_USERS.name(), CAN_DELETE_USER.name())
                                 .requestMatchers("/api/v1/users/management/find-all").hasAnyRole(CAN_VIEW_USERS.name(), CAN_DELETE_USER.name())
                                 .requestMatchers("/api/v1/users/management/filter").hasAnyRole(CAN_VIEW_USERS.name(), CAN_DELETE_USER.name())
                                 .requestMatchers("/api/v1/users/management/search").hasAnyRole(CAN_VIEW_USERS.name(), CAN_DELETE_USER.name())
                                 .requestMatchers("/api/v1/users/management/delete").hasRole(CAN_DELETE_USER.name())
-                                .requestMatchers("/api/v1/roles/**").hasAnyRole(CAN_ADD_ROLE.name(), CAN_UPDATE_ROLE.name(), CAN_DELETE_ROLE.name())
+                                .requestMatchers("/api/v1/roles/**").hasAnyRole(CAN_ADD_ROLE.name(), CAN_UPDATE_ROLE.name(), CAN_DELETE_ROLE.name())*/
 
                                 /*
                                 .requestMatchers(GET, "/**").permitAll()
